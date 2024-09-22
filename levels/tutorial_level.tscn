@@ -1,0 +1,37 @@
+[gd_scene load_steps=8 format=3 uid="uid://br3hgu7w3sbi"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_2u16f"]
+[ext_resource type="Resource" path="res://assets/terrains/data.hterrain" id="2_qse4x"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_wdr3k"]
+[ext_resource type="Texture2D" uid="uid://cf176g6pxxygw" path="res://levels/tutorial_level_slot0_albedo_bump.png" id="4_fel52"]
+[ext_resource type="Texture2D" uid="uid://cfwooobvloedv" path="res://assets/textures/Kenny's prototype texture/Dark/texture_04.png" id="5_qxvdf"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/Aircraft/Aircraft.gd" id="6_78w3g"]
+
+[sub_resource type="Resource" id="Resource_n5wam"]
+script = ExtResource("3_wdr3k")
+mode = 0
+textures = [[ExtResource("4_fel52")], [ExtResource("5_qxvdf")]]
+
+[node name="Tutorial level" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_2u16f")
+centered = true
+_terrain_data = ExtResource("2_qse4x")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_n5wam")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+
+[node name="Aircraft" type="RigidBody3D" parent="."]
+script = ExtResource("6_78w3g")

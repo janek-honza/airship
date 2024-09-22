@@ -1,0 +1,11 @@
+Model Information:
+* title:	Cornflow Blimp Air Balloon V.1.9
+* source:	https://sketchfab.com/3d-models/cornflow-blimp-air-balloon-v19-6d77608a42744e368f0375ad1fa4e309
+* author:	BuildCG (https://sketchfab.com/HadiBuilditon)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Cornflow Blimp Air Balloon V.1.9" (https://sketchfab.com/3d-models/cornflow-blimp-air-balloon-v19-6d77608a42744e368f0375ad1fa4e309) by BuildCG (https://sketchfab.com/HadiBuilditon) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
