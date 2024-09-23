@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://br3hgu7w3sbi"]
+[gd_scene load_steps=29 format=3 uid="uid://br3hgu7w3sbi"]
 
 [ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_2u16f"]
 [ext_resource type="Resource" path="res://assets/terrains/data.hterrain" id="2_qse4x"]
@@ -6,11 +6,46 @@
 [ext_resource type="Texture2D" uid="uid://cf176g6pxxygw" path="res://levels/tutorial_level_slot0_albedo_bump.png" id="4_fel52"]
 [ext_resource type="Texture2D" uid="uid://cfwooobvloedv" path="res://assets/textures/Kenny's prototype texture/Dark/texture_04.png" id="5_qxvdf"]
 [ext_resource type="Script" path="res://addons/simplified_flightsim/Aircraft/Aircraft.gd" id="6_78w3g"]
+[ext_resource type="Texture2D" uid="uid://sdjq6mywh4mt" path="res://assets/textures/Kenny's prototype texture/Green/texture_01.png" id="7_a3i65"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/Engine/Engine.gd" id="7_o27xv"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/Controls/ControlEngine.gd" id="8_827js"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/EnergyContainer/EnergyContainer.gd" id="9_l5nhs"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/Steering/Steering.gd" id="10_418x6"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/Controls/ControlSteering.gd" id="11_d3n37"]
+[ext_resource type="Texture2D" uid="uid://b7ayu2yqijan7" path="res://assets/textures/Kenny's prototype texture/Red/texture_01.png" id="13_bguj7"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/LandingGear/LandingGear.gd" id="13_vcgeb"]
+[ext_resource type="Script" path="res://addons/simplified_flightsim/aircraft_modules/Controls/ControlLandingGear.gd" id="14_43s1n"]
 
 [sub_resource type="Resource" id="Resource_n5wam"]
 script = ExtResource("3_wdr3k")
 mode = 0
 textures = [[ExtResource("4_fel52")], [ExtResource("5_qxvdf")]]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p6akl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1ux7p"]
+albedo_texture = ExtResource("7_a3i65")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_u5nwk"]
+
+[sub_resource type="AudioStream" id="AudioStream_l3hck"]
+
+[sub_resource type="AudioStream" id="AudioStream_33dka"]
+
+[sub_resource type="AudioStream" id="AudioStream_63swd"]
+
+[sub_resource type="AudioStream" id="AudioStream_ax4dr"]
+
+[sub_resource type="AudioStream" id="AudioStream_8etki"]
+
+[sub_resource type="AudioStream" id="AudioStream_vgnjv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_024f6"]
+albedo_texture = ExtResource("13_bguj7")
+
+[sub_resource type="BoxMesh" id="BoxMesh_61mdm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tcked"]
 
 [node name="Tutorial level" type="Node3D"]
 
@@ -34,4 +69,81 @@ shader_params/u_triplanar = null
 shader_params/u_tile_reduction = null
 
 [node name="Aircraft" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.172791, 43.7191, 0.158295)
 script = ExtResource("6_78w3g")
+LiftFactor = 0.0
+DragPointDistance = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Aircraft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_p6akl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Aircraft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+material_override = SubResource("StandardMaterial3D_1ux7p")
+mesh = SubResource("CapsuleMesh_u5nwk")
+
+[node name="Camera3D" type="Camera3D" parent="Aircraft"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.82895, 7.37771)
+
+[node name="AircraftModule_EngineUp" type="Node3D" parent="Aircraft"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+script = ExtResource("7_o27xv")
+EngineSoundLoop = SubResource("AudioStream_l3hck")
+EngineSoundStart = SubResource("AudioStream_33dka")
+EngineSoundStop = SubResource("AudioStream_63swd")
+ModuleTags = [null]
+
+[node name="AircraftModule_ControlEngine" type="Node" parent="Aircraft"]
+script = ExtResource("8_827js")
+RestrictEngineToTag = true
+SearchTag = "Up"
+
+[node name="AircraftModule_EnergyContainer" type="Node" parent="Aircraft"]
+script = ExtResource("9_l5nhs")
+
+[node name="AircraftModule_Steering" type="Node" parent="Aircraft"]
+script = ExtResource("10_418x6")
+SteeringType = 1
+PowerFactor = 0.5
+
+[node name="AircraftModule_ControlSteering" type="Node" parent="Aircraft"]
+script = ExtResource("11_d3n37")
+
+[node name="AircraftModule_LandingGear" type="Node3D" parent="Aircraft"]
+script = ExtResource("13_vcgeb")
+InitialState = 1
+
+[node name="AircraftModule_ControlLandingGear" type="Node" parent="Aircraft"]
+script = ExtResource("14_43s1n")
+
+[node name="AircraftModule_EngineFront" type="Node3D" parent="Aircraft"]
+script = ExtResource("7_o27xv")
+PowerFactor = 5.0
+EngineSoundLoop = SubResource("AudioStream_ax4dr")
+EngineSoundStart = SubResource("AudioStream_8etki")
+EngineSoundStop = SubResource("AudioStream_vgnjv")
+ModuleTags = [null]
+
+[node name="AircraftModule_ControlEngineFront" type="Node" parent="Aircraft"]
+script = ExtResource("8_827js")
+RestrictEngineToTag = true
+SearchTag = "front"
+KeyStart = 76
+KeyStop = 75
+KeyMax = 54
+KeyMid = 53
+KeyMin = 52
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 0, 0)
+
+[node name="Takeoff pad" type="MeshInstance3D" parent="."]
+transform = Transform3D(9.93099, 0, 0, 0, 1.52362, 0, 0, 0, 10.6237, 0, 41.6394, 0)
+material_override = SubResource("StandardMaterial3D_024f6")
+mesh = SubResource("BoxMesh_61mdm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Takeoff pad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Takeoff pad/StaticBody3D"]
+shape = SubResource("BoxShape3D_tcked")
