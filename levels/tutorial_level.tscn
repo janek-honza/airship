@@ -71,9 +71,11 @@ shader_params/u_tile_reduction = null
 [node name="Aircraft" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.172791, 43.7191, 0.158295)
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.15, 0)
+center_of_mass = Vector3(0, -1, 0)
+inertia = Vector3(10, 10, 0)
 script = ExtResource("6_78w3g")
 LiftFactor = 0.0
+DragFactor = Vector3(1, 1, 1)
 DragPointDistance = 0.0
 Gravity = 0.1
 
@@ -89,16 +91,17 @@ mesh = SubResource("CapsuleMesh_u5nwk")
 [node name="Camera3D" type="Camera3D" parent="Aircraft"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.82895, 7.37771)
 
-[node name="AircraftModule_EngineUp" type="Node3D" parent="Aircraft"]
+[node name="AircraftModule_Engine_Up" type="Node3D" parent="Aircraft"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 script = ExtResource("7_o27xv")
 PowerFactor = 5.0
+EnginePosition = Vector3(0, 1, 0)
 EngineSoundLoop = SubResource("AudioStream_l3hck")
 EngineSoundStart = SubResource("AudioStream_33dka")
 EngineSoundStop = SubResource("AudioStream_63swd")
 ModuleTags = [null]
 
-[node name="AircraftModule_ControlEngine" type="Node" parent="Aircraft"]
+[node name="AircraftModule_Control_Engine_Up" type="Node" parent="Aircraft"]
 script = ExtResource("8_827js")
 SearchTag = "Up"
 
@@ -107,7 +110,6 @@ script = ExtResource("9_l5nhs")
 
 [node name="AircraftModule_Steering" type="Node" parent="Aircraft"]
 script = ExtResource("10_418x6")
-SteeringType = 1
 
 [node name="AircraftModule_ControlSteering" type="Node" parent="Aircraft"]
 script = ExtResource("11_d3n37")
@@ -119,15 +121,16 @@ InitialState = 1
 [node name="AircraftModule_ControlLandingGear" type="Node" parent="Aircraft"]
 script = ExtResource("14_43s1n")
 
-[node name="AircraftModule_EngineFront" type="Node3D" parent="Aircraft"]
+[node name="AircraftModule_Engine_Front" type="Node3D" parent="Aircraft"]
 script = ExtResource("7_o27xv")
 PowerFactor = 5.0
+EnginePosition = Vector3(0, -1, 0)
 EngineSoundLoop = SubResource("AudioStream_ax4dr")
 EngineSoundStart = SubResource("AudioStream_8etki")
 EngineSoundStop = SubResource("AudioStream_vgnjv")
 ModuleTags = [null]
 
-[node name="AircraftModule_ControlEngineFront" type="Node" parent="Aircraft"]
+[node name="AircraftModule_ControlEngine_Front" type="Node" parent="Aircraft"]
 script = ExtResource("8_827js")
 SearchTag = "front"
 KeyStart = 76
