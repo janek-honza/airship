@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf176g6pxxygw"
-path.s3tc="res://.godot/imported/tutorial_level_slot0_albedo_bump.png-9138b3e4eb80ea83eb8f0fad9e5d39c5.s3tc.ctex"
+uid="uid://vbfkf1d8ag3b"
+path.s3tc="res://.godot/imported/fx_cloudalpha03.png-7a1dd41c11455d8f11929ade593366a3.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://levels/tutorial_level_slot0_albedo_bump.png"
-dest_files=["res://.godot/imported/tutorial_level_slot0_albedo_bump.png-9138b3e4eb80ea83eb8f0fad9e5d39c5.s3tc.ctex"]
+source_file="res://assets/textures/fx_cloudalpha03.png"
+dest_files=["res://.godot/imported/fx_cloudalpha03.png-7a1dd41c11455d8f11929ade593366a3.s3tc.ctex"]
 
 [params]
 
@@ -24,9 +24,9 @@ compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
+roughness/mode=0
 roughness/src_normal=""
-process/fix_alpha_border=false
+process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false
 process/hdr_as_srgb=false

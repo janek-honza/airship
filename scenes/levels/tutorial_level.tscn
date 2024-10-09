@@ -1,0 +1,69 @@
+[gd_scene load_steps=14 format=3 uid="uid://br3hgu7w3sbi"]
+
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain.gd" id="1_2u16f"]
+[ext_resource type="Resource" path="res://assets/terrains/data.hterrain" id="2_qse4x"]
+[ext_resource type="Script" path="res://addons/zylann.hterrain/hterrain_texture_set.gd" id="3_wdr3k"]
+[ext_resource type="Texture2D" uid="uid://cf176g6pxxygw" path="res://scenes/levels/tutorial_level_slot0_albedo_bump.png" id="4_fel52"]
+[ext_resource type="Texture2D" uid="uid://cfwooobvloedv" path="res://assets/textures/Kenny's prototype texture/Dark/texture_04.png" id="5_qxvdf"]
+[ext_resource type="PackedScene" uid="uid://81rhba1gspqc" path="res://scenes/aircraft.tscn" id="6_hvvbs"]
+[ext_resource type="Texture2D" uid="uid://b7ayu2yqijan7" path="res://assets/textures/Kenny's prototype texture/Red/texture_01.png" id="13_bguj7"]
+[ext_resource type="Script" path="res://scenes/levels/cloud_spawner.gd" id="16_srg70"]
+
+[sub_resource type="Resource" id="Resource_n5wam"]
+script = ExtResource("3_wdr3k")
+mode = 0
+textures = [[ExtResource("4_fel52")], [ExtResource("5_qxvdf")]]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_024f6"]
+albedo_texture = ExtResource("13_bguj7")
+
+[sub_resource type="BoxMesh" id="BoxMesh_61mdm"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tcked"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oas5o"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0)
+
+[node name="Tutorial level" type="Node3D"]
+
+[node name="HTerrain" type="Node3D" parent="."]
+script = ExtResource("1_2u16f")
+centered = true
+_terrain_data = ExtResource("2_qse4x")
+chunk_size = 32
+collision_enabled = true
+collision_layer = 1
+collision_mask = 1
+shader_type = "Classic4Lite"
+custom_shader = null
+custom_globalmap_shader = null
+texture_set = SubResource("Resource_n5wam")
+render_layers = 1
+cast_shadow = 1
+shader_params/u_ground_uv_scale = 20
+shader_params/u_depth_blending = true
+shader_params/u_triplanar = null
+shader_params/u_tile_reduction = null
+
+[node name="Aircraft" parent="." instance=ExtResource("6_hvvbs")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, 0.5, -0.5, 0, 0.707107, 0.707107, 0.707107, -0.5, 0.5, 0, 0, 0)
+
+[node name="Takeoff pad" type="MeshInstance3D" parent="."]
+transform = Transform3D(9.93099, 0, 0, 0, 1.52362, 0, 0, 0, 10.6237, 0, 41.6394, 0)
+material_override = SubResource("StandardMaterial3D_024f6")
+mesh = SubResource("BoxMesh_61mdm")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Takeoff pad"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Takeoff pad/StaticBody3D"]
+shape = SubResource("BoxShape3D_tcked")
+
+[node name="CloudSpawner" type="CSGBox3D" parent="."]
+transform = Transform3D(194.448, 0, 0, 0, 26.185, 0, 0, 0, 179.246, -6.45635, 47.7964, -34.797)
+size = Vector3(0.144104, 1, 0.168762)
+material = SubResource("StandardMaterial3D_oas5o")
+script = ExtResource("16_srg70")
