@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://cm1vg8l784ypm"]
+
+[ext_resource type="PackedScene" uid="uid://begm6jeellvw0" path="res://assets/3d models/floater.glb" id="1_fcumt"]
+[ext_resource type="Script" path="res://scripts/player_floater.gd" id="1_pxgg3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
+size = Vector3(37.9727, 41.336, 78.7409)
+
+[node name="Player" type="Node3D"]
+
+[node name="PlayerFloater" type="CharacterBody3D" parent="."]
+script = ExtResource("1_pxgg3")
+
+[node name="floater" parent="PlayerFloater" instance=ExtResource("1_fcumt")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerFloater"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.165039, 2.91855, 1.608)
+shape = SubResource("BoxShape3D_a4xc2")
+
+[node name="CameraOrigin" type="Node3D" parent="PlayerFloater"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="PlayerFloater/CameraOrigin"]
+spring_length = 75.0
+margin = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="PlayerFloater/CameraOrigin/SpringArm3D"]
+transform = Transform3D(-1, 0, -0.000471266, 0, 1, 0, 0.000471266, 0, -1, 0, 0, -75)

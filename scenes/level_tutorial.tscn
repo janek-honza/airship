@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://gf7vswdsvkv1"]
+
+[ext_resource type="Material" uid="uid://dnlblb8kauymr" path="res://materials/ground_basic.tres" id="1_62mkq"]
+[ext_resource type="Material" uid="uid://btx55q7yipbi8" path="res://materials/ground_object_basic.tres" id="2_eno7g"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_rys00"]
+size = Vector2(1000, 1000)
+
+[node name="level_tutorial" type="Node3D"]
+
+[node name="floor" type="CSGMesh3D" parent="."]
+mesh = SubResource("PlaneMesh_rys00")
+material = ExtResource("1_62mkq")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 4.56997, 50)
+size = Vector3(10, 10, 10)
+material = ExtResource("2_eno7g")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.1082, 4.56997, 23)
+size = Vector3(10, 10, 10)
+material = ExtResource("2_eno7g")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 1)
+size = Vector3(10, 10, 10)
+material = ExtResource("2_eno7g")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="floor"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.56997, -19)
+size = Vector3(10, 10, 10)
+material = ExtResource("2_eno7g")

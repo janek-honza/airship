@@ -11,13 +11,8 @@ config_version=5
 [application]
 
 config/name="airship"
-run/main_scene="res://scenes/levels/tutorial_level.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/simplified_flightsim/plugin.cfg", "res://addons/zylann.hterrain/plugin.cfg")
 
 [rendering]
 
