@@ -1,27 +1,85 @@
-[gd_scene load_steps=4 format=3 uid="uid://cm1vg8l784ypm"]
+[gd_scene load_steps=5 format=3 uid="uid://dlcvh4vewtv7u"]
 
-[ext_resource type="PackedScene" uid="uid://begm6jeellvw0" path="res://assets/3d models/floater.glb" id="1_fcumt"]
-[ext_resource type="Script" path="res://scripts/player_floater.gd" id="1_pxgg3"]
+[ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
+[ext_resource type="PackedScene" uid="uid://cug64wear4wr2" path="res://scenes/floater.tscn" id="2_nixoe"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
 
-[node name="Player" type="Node3D"]
-
-[node name="PlayerFloater" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D"]
+motion_mode = 1
 script = ExtResource("1_pxgg3")
 
-[node name="floater" parent="PlayerFloater" instance=ExtResource("1_fcumt")]
+[node name="visuals" type="Node3D" parent="."]
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerFloater"]
+[node name="floater" parent="visuals" instance=ExtResource("2_nixoe")]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="visuals"]
+root_node = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.165039, 2.91855, 1.608)
 shape = SubResource("BoxShape3D_a4xc2")
 
-[node name="CameraOrigin" type="Node3D" parent="PlayerFloater"]
+[node name="XPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="PlayerFloater/CameraOrigin"]
+[node name="YPivot" type="Node3D" parent="XPivot"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="XPivot/YPivot"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 spring_length = 75.0
 margin = 0.5
 
-[node name="Camera3D" type="Camera3D" parent="PlayerFloater/CameraOrigin/SpringArm3D"]
-transform = Transform3D(-1, 0, -0.000471266, 0, 1, 0, 0.000471266, 0, -1, 0, 0, -75)
+[node name="Camera3D" type="Camera3D" parent="XPivot/YPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50987e-05, 0, 97.7091)
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("3_4kp0t")
+
+[node name="Altitude_Throttle_Weight" type="RichTextLabel" parent="HUD"]
+anchors_preset = -1
+anchor_right = 0.02
+anchor_bottom = 0.022
+offset_left = 1048.0
+offset_right = 1128.96
+offset_bottom = 83.744
+text = "Altitude:
+Throttle:
+Mass:"
+fit_content = true
+
+[node name="ControlsShown" type="RichTextLabel" parent="HUD"]
+anchors_preset = -1
+anchor_right = 0.02
+anchor_bottom = 0.022
+offset_left = 835.0
+offset_top = 390.0
+offset_right = 1128.96
+offset_bottom = 633.744
+bbcode_enabled = true
+text = "[b]Show/Hide controls: T[/b]
+
+Inflate Ballonet (add mass): R
+Deflate Ballonet (reduce mass): F
+
+Increase/Decrease Throttle: Scroll wheel
+
+Pitch Up/Down: W/S
+Yaw Left/Right: A/D
+
+Free/Capture Mouse: Esc"
+fit_content = true
+
+[node name="ControlsHidden" type="RichTextLabel" parent="HUD"]
+anchors_preset = -1
+anchor_right = 0.02
+anchor_bottom = 0.022
+offset_left = 835.0
+offset_top = 620.0
+offset_right = 1128.96
+offset_bottom = 633.744
+bbcode_enabled = true
+text = "[b]Show/Hide controls: T[/b]"
+fit_content = true

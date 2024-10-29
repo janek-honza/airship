@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cug64wear4wr2"]
+
+[ext_resource type="PackedScene" uid="uid://begm6jeellvw0" path="res://assets/3d models/floater.glb" id="1_idad5"]
+[ext_resource type="Material" uid="uid://slsf0rflb1jp" path="res://materials/airship_static_parts.tres" id="2_qmjle"]
+[ext_resource type="Material" uid="uid://cde4r338s6o6p" path="res://materials/airship_moving_parts.tres" id="3_hw17f"]
+[ext_resource type="Script" path="res://scenes/animation_player.gd" id="4_jsxtl"]
+
+[node name="floater" instance=ExtResource("1_idad5")]
+
+[node name="envelope" parent="." index="0"]
+material_override = ExtResource("2_qmjle")
+
+[node name="vertical stabiliser" parent="." index="1"]
+material_override = ExtResource("2_qmjle")
+
+[node name="gondola" parent="." index="2"]
+material_override = ExtResource("2_qmjle")
+
+[node name="right engine" parent="." index="3"]
+material_override = ExtResource("2_qmjle")
+
+[node name="left engine" parent="." index="4"]
+material_override = ExtResource("2_qmjle")
+
+[node name="left propeller" parent="." index="5"]
+transform = Transform3D(0.164403, 1.49822e-09, 0.0707908, 0.0707908, -7.2677e-09, -0.164403, 4.11723e-09, 0.0651349, -1.99722e-08, 2.39882, -14.8543, 5.48847)
+material_override = ExtResource("3_hw17f")
+
+[node name="right propeller" parent="." index="6"]
+transform = Transform3D(-0.140327, 3.40177e-09, 0.111121, 0.111121, -6.58785e-09, 0.140327, 1.85678e-08, 0.0651349, 8.38942e-09, -2.3756, -14.8543, 5.48847)
+material_override = ExtResource("3_hw17f")
+
+[node name="rudder down" parent="." index="8"]
+material_override = ExtResource("3_hw17f")
+
+[node name="rudder up" parent="." index="9"]
+material_override = ExtResource("3_hw17f")
+
+[node name="elevator right" parent="." index="10"]
+material_override = ExtResource("3_hw17f")
+
+[node name="elevator left" parent="." index="11"]
+material_override = ExtResource("3_hw17f")
+
+[node name="AnimationPlayer" parent="." index="12"]
+script = ExtResource("4_jsxtl")
