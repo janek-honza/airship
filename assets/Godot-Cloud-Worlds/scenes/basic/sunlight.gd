@@ -2,7 +2,7 @@ extends DirectionalLight3D
 
 var a : float = 0.0;
 
-func _process(delta):
+func _process(_delta):
 	a += 0.001 # Dynamic
 	a = 2.5 # Static Position
 	
