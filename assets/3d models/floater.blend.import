@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://gjrrngysyos8"
-path="res://.godot/imported/airship.blend-2ed72efb4215365c149a91018549ea8b.scn"
+path="res://.godot/imported/floater.blend-22fccde965fa7ec7c40f3d04a920a722.scn"
 
 [deps]
 
-source_file="res://assets/3d models/airship.blend"
-dest_files=["res://.godot/imported/airship.blend-2ed72efb4215365c149a91018549ea8b.scn"]
+source_file="res://assets/3d models/floater.blend"
+dest_files=["res://.godot/imported/floater.blend-22fccde965fa7ec7c40f3d04a920a722.scn"]
 
 [params]
 

@@ -38,48 +38,43 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.50987e-05, 0, 97.7091)
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource("3_4kp0t")
 
-[node name="Altitude_Throttle_Weight" type="RichTextLabel" parent="HUD"]
+[node name="Altitude_Throttle_Mass" type="RichTextLabel" parent="HUD"]
 anchors_preset = -1
-anchor_right = 0.02
-anchor_bottom = 0.022
-offset_left = 1048.0
-offset_right = 1128.96
-offset_bottom = 83.744
+anchor_left = 0.997
+anchor_top = 0.003
+anchor_right = 0.997
+anchor_bottom = 0.003
+offset_left = -125.0
+offset_top = 0.056
+offset_right = 0.456055
+offset_bottom = 98.056
 text = "Altitude:
 Throttle:
 Mass:"
 fit_content = true
 
-[node name="ControlsShown" type="RichTextLabel" parent="HUD"]
+[node name="Debug" type="RichTextLabel" parent="HUD"]
 anchors_preset = -1
-anchor_right = 0.02
-anchor_bottom = 0.022
-offset_left = 835.0
-offset_top = 390.0
-offset_right = 1128.96
-offset_bottom = 633.744
-bbcode_enabled = true
-text = "[b]Show/Hide controls: T[/b]
-
-Inflate Ballonet (add mass): R
-Deflate Ballonet (reduce mass): F
-
-Increase/Decrease Throttle: Scroll wheel
-
-Pitch Up/Down: W/S
-Yaw Left/Right: A/D
-
-Free/Capture Mouse: Esc"
+anchor_left = 1.0
+anchor_top = 0.185
+anchor_right = 1.0
+anchor_bottom = 0.185
+offset_left = -125.0
+offset_top = -0.880005
+offset_bottom = 97.12
+text = "Debug:"
 fit_content = true
 
-[node name="ControlsHidden" type="RichTextLabel" parent="HUD"]
-anchors_preset = -1
-anchor_right = 0.02
-anchor_bottom = 0.022
-offset_left = 835.0
-offset_top = 620.0
-offset_right = 1128.96
-offset_bottom = 633.744
+[node name="Controls_cheatsheet" type="RichTextLabel" parent="HUD"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -316.0
+offset_top = -23.0
+grow_vertical = 0
 bbcode_enabled = true
-text = "[b]Show/Hide controls: T[/b]"
+text = "[b]Show/Hide controls: T[/b]
+"
 fit_content = true
