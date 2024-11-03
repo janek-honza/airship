@@ -36,7 +36,7 @@ var cargo_weight = 100
 var displacment = 0
 var target_engine_speed = 0
 var engine_speed = 0
-var relative_speed_forward = velocity.dot(global_transform.basis.z)
+var relative_speed_forward = 0
 
 func _ready():
 	pass
@@ -62,7 +62,7 @@ func _input(event):
 	if Input.is_action_pressed("deflate_ballonet"):
 		target_fill_percent_ballonets = max(target_fill_percent_ballonets - 1, 0)
 
-func _process(delta):
+func _process(_delta):
 	displacment = -self.global_transform.origin.y + 40 + base_mass + max_mass_of_ballonets * 0.5
 	HUD.text = "Altitude: " + str(snapped(self.global_transform.origin.y, 1))+ "\nThrottle: " + str(throttle) + "\nMass: " + str(snapped(mass, 1))
 	Debug.text = "Debug:" + "\n" + str(snapped(relative_speed_forward, 0.1)) + "\n" + str(snapped(engine_speed, 0.1))

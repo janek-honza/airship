@@ -15,6 +15,10 @@ run/main_scene="res://scenes/level_tutorial.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[display]
+
+window/size/mode=2
+
 [input]
 
 toggle_mouse={
@@ -70,5 +74,4 @@ toggle_controls={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/quality/msaa_3d=2
