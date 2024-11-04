@@ -4,6 +4,9 @@ extends CharacterBody3D
 @onready var Ypivot = $XPivot/YPivot
 @onready var HUD = $HUD/Altitude_Throttle_Mass
 @onready var visuals = $visuals
+#@onready var wind = get_node("../wind_visuals") Not working direct node access, the line below is a workaround to be removed when this is fixed.
+#var wind_direction = wind.wind_direction
+var wind_direction: Vector3 = Vector3(1, 0, -1)
 
 @export var sensitivity = 0.1
 @export var mass = 0
@@ -82,7 +85,7 @@ func _physics_process(delta):
 		fill_percent_ballonets = max(fill_percent_ballonets - delta, target_fill_percent_ballonets)
 	mass = base_mass + cargo_weight + max_mass_of_ballonets * fill_percent_ballonets/100
 	
-	velocity = engine_direction * engine_speed + Vector3.UP * (displacment - mass)/10
+	velocity = engine_direction * engine_speed + Vector3.UP * (displacment - mass)/10 + wind_direction * (sin(wind_direction.angle_to(engine_direction)) + 1)
 	
 	self.rotation.x = lerp(self.rotation.x, -float(pitch_input) * max_pitch_degree_in_pitch/360 * (relative_speed_forward / 10), pitch_level_speed * delta)
 	

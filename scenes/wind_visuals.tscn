@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://de3ffaf51nbbs"]
+
+[ext_resource type="Script" path="res://scripts/wind_visuals.gd" id="1_j5s2r"]
+
+[node name="wind_visuals" type="Node3D"]
+script = ExtResource("1_j5s2r")

@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://dfrw68b7015v4"]
+
+[ext_resource type="PackedScene" uid="uid://uqkiofe41tkb" path="res://assets/3d models/ring.blend" id="1_sltga"]
+[ext_resource type="Texture2D" uid="uid://dqnvre4wve0hk" path="res://assets/textures/Kenny's prototype texture/Orange/texture_03.png" id="2_4w5ut"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0fe0"]
+albedo_texture = ExtResource("2_4w5ut")
+uv1_triplanar = true
+
+[node name="ring" instance=ExtResource("1_sltga")]
+
+[node name="ring" parent="." index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_e0fe0")
