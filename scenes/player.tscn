@@ -1,0 +1,65 @@
+[gd_scene load_steps=5 format=3 uid="uid://bunice3vh7vor"]
+
+[ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
+[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/floater.blend" id="2_m2vom"]
+[ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
+size = Vector3(37.9727, 41.336, 78.7409)
+
+[node name="Player" type="CharacterBody3D"]
+motion_mode = 1
+script = ExtResource("1_pxgg3")
+
+[node name="visuals" type="Node3D" parent="."]
+
+[node name="floater" parent="visuals" instance=ExtResource("2_m2vom")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.165039, 2.91855, 1.608)
+shape = SubResource("BoxShape3D_a4xc2")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("3_4kp0t")
+
+[node name="Altitude_Throttle_Mass" type="RichTextLabel" parent="HUD"]
+anchors_preset = -1
+anchor_left = 0.997
+anchor_top = 0.003
+anchor_right = 0.997
+anchor_bottom = 0.003
+offset_left = -125.0
+offset_top = 0.056
+offset_right = 0.456055
+offset_bottom = 98.056
+text = "Altitude:
+Throttle:
+Mass:"
+fit_content = true
+
+[node name="Debug" type="RichTextLabel" parent="HUD"]
+visible = false
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.185
+anchor_right = 1.0
+anchor_bottom = 0.185
+offset_left = -125.0
+offset_top = -0.880005
+offset_bottom = 97.12
+text = "Debug:"
+fit_content = true
+
+[node name="Controls_cheatsheet" type="RichTextLabel" parent="HUD"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -316.0
+offset_top = -23.0
+grow_vertical = 0
+bbcode_enabled = true
+text = "[b]Show/Hide controls: T[/b]
+"
+fit_content = true
