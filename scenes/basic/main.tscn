@@ -7,7 +7,10 @@
 [ext_resource type="Script" path="res://scenes/basic/sunlight.gd" id="4_uk33e"]
 [ext_resource type="CompressedTexture3D" uid="uid://4ncscg8jgec0" path="res://textures/clouds/cloud_volume_a.png" id="5_1gko6"]
 [ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="5_3hakk"]
+[ext_resource type="PackedScene" path="res://scenes/wind_visuals.tscn" id="8_esdj5"]
 [ext_resource type="PackedScene" uid="uid://bunice3vh7vor" path="res://scenes/player.tscn" id="8_im5lg"]
+[ext_resource type="Script" path="res://scripts/spring_arm_3d.gd" id="10_ftpw1"]
+[ext_resource type="PackedScene" path="res://scenes/ring.tscn" id="10_koiw3"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7bm1i"]
 gradient = ExtResource("5_3hakk")
@@ -37,23 +40,16 @@ adjustment_color_correction = SubResource("GradientTexture2D_7bm1i")
 auto_exposure_enabled = true
 auto_exposure_scale = 0.3
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bfr7x"]
-
-[sub_resource type="SphereMesh" id="SphereMesh_avnke"]
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_e0aqa"]
-size = Vector2(10, 10)
-
 [node name="main" type="Node"]
 
 [node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light", "camera") instance=ExtResource("2_38qtq")]
 world_environment = NodePath("../WorldEnvironment")
 directional_light = NodePath("../sunlight")
-camera = NodePath("../Player/XPivot/YPivot/SpringArm3D/Camera3D2")
+camera = NodePath("../Player/XPivot/YPivot/SpringArm3D/Camera3D")
 cloud_base_texture = ExtResource("3_xqfxp")
 cloud_detail_texture = ExtResource("4_6liwh")
 cloud_volume_texture = ExtResource("5_1gko6")
-wind_vector = Vector2(2, 0)
+wind_vector = Vector2(1, -1)
 wind_uplift = 3.0
 
 [node name="debug" type="Label" parent="."]
@@ -85,17 +81,10 @@ script = ExtResource("4_uk33e")
 environment = SubResource("Environment_288wc")
 camera_attributes = SubResource("CameraAttributesPractical_vf470")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-visible = false
-material_override = SubResource("StandardMaterial3D_bfr7x")
-mesh = SubResource("SphereMesh_avnke")
-
-[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-visible = false
-mesh = SubResource("PlaneMesh_e0aqa")
+[node name="wind_visuals" parent="." instance=ExtResource("8_esdj5")]
 
 [node name="Player" parent="." instance=ExtResource("8_im5lg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
 [node name="XPivot" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
@@ -104,13 +93,91 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Player/XPivot/YPivot"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-spring_length = 75.0
+spring_length = 100.0
 margin = 0.5
-
-[node name="Camera3D2" type="Camera3D" parent="Player/XPivot/YPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.74228e-06, 2, -100)
-far = 20000.0
+script = ExtResource("10_ftpw1")
 
 [node name="Camera3D" type="Camera3D" parent="Player/XPivot/YPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
 far = 20000.0
+
+[node name="map" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="ground" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+use_collision = true
+size = Vector3(10000, 1, 10000)
+
+[node name="road" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8221, 0.157098, 50)
+use_collision = true
+size = Vector3(20, 1, 10000)
+
+[node name="house1" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 4.56997, 50)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house2" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.1082, 4.56997, 23)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house3" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 1)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house4" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, -19)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house5" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, 667.962)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house6" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5098, 4.56997, 715.775)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house7" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 692.775)
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="tower1" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 41.5533, 569)
+use_collision = true
+size = Vector3(50, 100, 50)
+
+[node name="tower2" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 845.572)
+use_collision = true
+size = Vector3(50, 200, 50)
+
+[node name="tower4" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 936.221)
+use_collision = true
+size = Vector3(75, 150, 75)
+
+[node name="tower3" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6525, 113.053, 953.26)
+use_collision = true
+size = Vector3(50, 250, 50)
+
+[node name="rings" type="Node3D" parent="."]
+
+[node name="ring1" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 70, 214)
+
+[node name="ring2" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 82, 120, 407)
+visible = false
+
+[node name="ring3" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40.0845, 270, 920.37)
+visible = false

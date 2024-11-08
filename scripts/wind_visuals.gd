@@ -62,7 +62,6 @@ func setup_trail_scene():
 	var mesh = ImmediateMesh.new()
 	var material = StandardMaterial3D.new()
 	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_ALWAYS  # Ensure trails render on top
 	material.unshaded = true  # Make the trails unaffected by lighting
 	material.albedo_color = Color(1, 1, 1, 0.5)
 	material.emission_enabled = true

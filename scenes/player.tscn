@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bunice3vh7vor"]
+[gd_scene load_steps=6 format=3 uid="uid://bunice3vh7vor"]
 
 [ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
 [ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/floater.blend" id="2_m2vom"]
+[ext_resource type="PackedScene" uid="uid://dxyjg5h2f7et3" path="res://assets/3d models/ciggar.blend" id="3_3h5lj"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
@@ -14,6 +15,10 @@ script = ExtResource("1_pxgg3")
 [node name="visuals" type="Node3D" parent="."]
 
 [node name="floater" parent="visuals" instance=ExtResource("2_m2vom")]
+
+[node name="ciggar" parent="visuals" instance=ExtResource("3_3h5lj")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.165039, 2.91855, 1.608)
