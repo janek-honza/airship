@@ -8,7 +8,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="player" type="CharacterBody3D"]
 motion_mode = 1
 script = ExtResource("1_pxgg3")
 
@@ -43,7 +43,6 @@ Mass:"
 fit_content = true
 
 [node name="Debug" type="RichTextLabel" parent="HUD"]
-visible = false
 anchors_preset = -1
 anchor_left = 1.0
 anchor_top = 0.185
@@ -68,3 +67,17 @@ bbcode_enabled = true
 text = "[b]Show/Hide controls: T[/b]
 "
 fit_content = true
+
+[node name="XPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+
+[node name="YPivot" type="Node3D" parent="XPivot"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="XPivot/YPivot"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
+spring_length = 100.0
+margin = 0.5
+
+[node name="Camera3D" type="Camera3D" parent="XPivot/YPivot/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
+far = 20000.0

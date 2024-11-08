@@ -5,7 +5,6 @@ extends CharacterBody3D
 @onready var HUD = $HUD/Altitude_Throttle_Mass
 @onready var visuals = $visuals
 @onready var airship_type = "floater"
-@onready var wind = $wind_visuals
 @onready var Debug = $HUD/Debug
 #@onready var wind = get_node("../wind_visuals") Not working direct node access, the line below is a workaround to be removed when this is fixed.
 #var wind_direction: Vector3 = wind.wind_direction
@@ -41,7 +40,7 @@ var cargo_weight = 100
 var displacment = 0
 var target_engine_speed = 0
 var engine_speed = 0
-var relative_speed_forward = velocity.dot(global_transform.basis.z)
+var relative_speed_forward = velocity.dot(transform.basis.z)
 
 func _ready():
 	pass
@@ -70,7 +69,7 @@ func _input(event):
 func _process(delta):
 	displacment = -self.global_transform.origin.y + 40 + base_mass + max_mass_of_ballonets * 0.5
 	HUD.text = "Altitude: " + str(snapped(self.global_transform.origin.y, 1))+ "\nThrottle: " + str(throttle) + "\nMass: " + str(snapped(mass, 1))
-	Debug.text = "Debug:" + "\n" +                                                                             str(target_fill_percent_ballonets) + "\n" + str(fill_percent_ballonets)
+	Debug.text = "Debug:" + "\n" + str(target_fill_percent_ballonets) + "\n" + str(fill_percent_ballonets) + "\n" + str(snapped(relative_speed_forward, 1)) + "\n" + str(snapped(engine_speed, 1))
 
 func _physics_process(delta):
 	var engine_direction = global_transform.basis.z #in other airships engine direction can be changed

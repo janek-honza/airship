@@ -24,8 +24,8 @@ func update_controls_visibility():
 	else:
 		controls_cheatsheet.text = "[b]Show/Hide controls cheatsheet: T[/b]
 
-Inflate Ballonets (add mass): R
-Deflate Ballonets (reduce mass): F
+Inflate Ballonets (add mass): Ctrl
+Deflate Ballonets (reduce mass): Space
 
 Increase/Decrease Throttle: Scroll wheel
 

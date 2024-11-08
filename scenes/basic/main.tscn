@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://o30gir8h2ufu"]
+[gd_scene load_steps=16 format=3 uid="uid://o30gir8h2ufu"]
 
 [ext_resource type="Script" path="res://scenes/basic/debug.gd" id="2_3sqim"]
 [ext_resource type="PackedScene" uid="uid://djl3q6ynbkau0" path="res://scenes/world/clouds.tscn" id="2_38qtq"]
@@ -7,10 +7,9 @@
 [ext_resource type="Script" path="res://scenes/basic/sunlight.gd" id="4_uk33e"]
 [ext_resource type="CompressedTexture3D" uid="uid://4ncscg8jgec0" path="res://textures/clouds/cloud_volume_a.png" id="5_1gko6"]
 [ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="5_3hakk"]
-[ext_resource type="PackedScene" path="res://scenes/wind_visuals.tscn" id="8_esdj5"]
+[ext_resource type="PackedScene" uid="uid://de3ffaf51nbbs" path="res://scenes/wind_visuals.tscn" id="8_esdj5"]
 [ext_resource type="PackedScene" uid="uid://bunice3vh7vor" path="res://scenes/player.tscn" id="8_im5lg"]
-[ext_resource type="Script" path="res://scripts/spring_arm_3d.gd" id="10_ftpw1"]
-[ext_resource type="PackedScene" path="res://scenes/ring.tscn" id="10_koiw3"]
+[ext_resource type="PackedScene" uid="uid://dfrw68b7015v4" path="res://scenes/ring.tscn" id="10_koiw3"]
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7bm1i"]
 gradient = ExtResource("5_3hakk")
@@ -42,10 +41,9 @@ auto_exposure_scale = 0.3
 
 [node name="main" type="Node"]
 
-[node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light", "camera") instance=ExtResource("2_38qtq")]
+[node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light") instance=ExtResource("2_38qtq")]
 world_environment = NodePath("../WorldEnvironment")
 directional_light = NodePath("../sunlight")
-camera = NodePath("../Player/XPivot/YPivot/SpringArm3D/Camera3D")
 cloud_base_texture = ExtResource("3_xqfxp")
 cloud_detail_texture = ExtResource("4_6liwh")
 cloud_volume_texture = ExtResource("5_1gko6")
@@ -82,24 +80,10 @@ environment = SubResource("Environment_288wc")
 camera_attributes = SubResource("CameraAttributesPractical_vf470")
 
 [node name="wind_visuals" parent="." instance=ExtResource("8_esdj5")]
+player_path = "../player"
 
-[node name="Player" parent="." instance=ExtResource("8_im5lg")]
+[node name="player" parent="." instance=ExtResource("8_im5lg")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
-
-[node name="XPivot" type="Node3D" parent="Player"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
-
-[node name="YPivot" type="Node3D" parent="Player/XPivot"]
-
-[node name="SpringArm3D" type="SpringArm3D" parent="Player/XPivot/YPivot"]
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-spring_length = 100.0
-margin = 0.5
-script = ExtResource("10_ftpw1")
-
-[node name="Camera3D" type="Camera3D" parent="Player/XPivot/YPivot/SpringArm3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
-far = 20000.0
 
 [node name="map" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)

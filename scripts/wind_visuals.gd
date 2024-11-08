@@ -60,14 +60,7 @@ func _ready():
 func setup_trail_scene():
 	# Create the wind trail mesh resource
 	var mesh = ImmediateMesh.new()
-	var material = StandardMaterial3D.new()
-	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	material.unshaded = true  # Make the trails unaffected by lighting
-	material.albedo_color = Color(1, 1, 1, 0.5)
-	material.emission_enabled = true
-	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	material.emission = Color(1, 1, 1, 0.2)
-	material.render_priority = 1
+	var material = load("res://assets/materials/wind.tres") as Material
 	
 	# Create the trail node
 	var trail_node = WindTrail.new()
