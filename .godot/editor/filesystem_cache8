@@ -1,5 +1,5 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1731087075
+::res://::1731158819
 icon.svg::CompressedTexture2D::2188413213162092773::1731086966::1731087075::1::::<><>::
 README.md::TextFile::-1::1731085006::0::1::::<><>::
 ::res://assets/::1731086966
@@ -7,30 +7,29 @@ README.md::TextFile::-1::1731085006::0::1::::<><>::
 ciggar.blend::PackedScene::8823709276298646562::1731086966::1731087079::1::::<><>::
 floater.blend::PackedScene::440775702175988125::1731085006::1731087079::1::::<><>::
 ring.blend::PackedScene::1437429116376971649::1731086966::1731087079::1::::<><>::
-::res://assets/materials/::1731086966
+::res://assets/materials/::1731092904
 airship_moving_parts.tres::StandardMaterial3D::4993458076036135453::1731086966::0::1::::<><>::uid://b3efmmfdl0ivy::::res://textures/Kenny's prototype texture/Red/texture_03.png
 airship_static_parts.tres::StandardMaterial3D::1287210515205936449::1731086966::0::1::::<><>::uid://5feffogt3tgg::::res://textures/Kenny's prototype texture/Light/texture_03.png
 ground_basic.tres::StandardMaterial3D::8094505638351166377::1731086966::0::1::::<><>::uid://bjs3g1o0bd7cs::::res://textures/Kenny's prototype texture/Green/texture_03.png
 ground_object_basic.tres::StandardMaterial3D::3769365375668307501::1731086966::0::1::::<><>::uid://egw8w2p12ut2::::res://textures/Kenny's prototype texture/Dark/texture_02.png
-wind.tres::StandardMaterial3D::4884053786560585149::1731092443::0::1::::<><>::uid://5feffogt3tgg::::res://textures/Kenny's prototype texture/Light/texture_03.png
-::res://scenes/::1731092297
+wind.tres::StandardMaterial3D::4884053786560585149::1731092904::0::1::::<><>::
+::res://scenes/::1731093282
 floater.tscn::PackedScene::6190939683187015213::1731085006::0::1::::<><>::uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>uid://slsf0rflb1jp::::res://materials/airship_static_parts.tres<>uid://cde4r338s6o6p::::res://materials/airship_moving_parts.tres<>res://scenes/animation_player.gd
 level_tutorial.tscn::PackedScene::2366652882504940339::1731086966::0::1::::<><>::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>res://scenes/ring.tscn
-player.tscn::PackedScene::3817524029099172305::1731092297::0::1::::<><>::res://scripts/player_movement.gd<>uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>uid://dxyjg5h2f7et3::::res://assets/3d models/ciggar.blend<>res://scripts/hud.gd<>res://scripts/spring_arm_3d.gd
+player.tscn::PackedScene::3817524029099172305::1731093282::0::1::::<><>::res://scripts/player_movement.gd<>uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>uid://dxyjg5h2f7et3::::res://assets/3d models/ciggar.blend<>res://scripts/hud.gd
 ring.tscn::PackedScene::7546693560844153727::1731086966::0::1::::<><>::uid://uqkiofe41tkb::::res://assets/3d models/ring.blend<>uid://dqnvre4wve0hk::::res://assets/textures/Kenny's prototype texture/Orange/texture_03.png
 wind_visuals.tscn::PackedScene::7498132525800804928::1731086966::0::1::::<><>::res://scripts/wind_visuals.gd
-::res://scenes/basic/::1731092297
+::res://scenes/basic/::1731093268
 debug.gd::GDScript::-1::1731086966::0::1::::<>Label<>::
-main.tscn::PackedScene::1041975475587002166::1731092297::0::1::::<><>::res://scenes/basic/debug.gd<>uid://djl3q6ynbkau0::::res://scenes/world/clouds.tscn<>uid://bwvwaoihjy78g::::res://textures/clouds/cloud_sdf_base.exr<>uid://437feiv1oerc::::res://textures/clouds/cloud_sdf_detail.exr<>res://scenes/basic/sunlight.gd<>uid://4ncscg8jgec0::::res://textures/clouds/cloud_volume_a.png<>uid://cwiiu5dy83cai::::res://textures/gradients/color_gradient_a.tres<>uid://de3ffaf51nbbs::::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>uid://dfrw68b7015v4::::res://scenes/ring.tscn
+main.tscn::PackedScene::1041975475587002166::1731093268::0::1::::<><>::res://scenes/basic/debug.gd<>uid://djl3q6ynbkau0::::res://scenes/world/clouds.tscn<>uid://bwvwaoihjy78g::::res://textures/clouds/cloud_sdf_base.exr<>uid://437feiv1oerc::::res://textures/clouds/cloud_sdf_detail.exr<>res://scenes/basic/sunlight.gd<>uid://4ncscg8jgec0::::res://textures/clouds/cloud_volume_a.png<>uid://cwiiu5dy83cai::::res://textures/gradients/color_gradient_a.tres<>uid://de3ffaf51nbbs::::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>uid://dfrw68b7015v4::::res://scenes/ring.tscn
 sunlight.gd::GDScript::-1::1731086966::0::1::::<>DirectionalLight3D<>::
-::res://scenes/world/::1731092297
+::res://scenes/world/::1731093268
 clouds.gd::GDScript::-1::1731086966::0::1::::<>Node<>::
-clouds.tscn::PackedScene::7815400113507742529::1731092297::0::1::::<><>::res://scenes/world/clouds.gd<>res://shaders/cloud_sdf.gdshader<>res://shaders/buffer_sky.gdshader
-::res://scripts/::1731092297
+clouds.tscn::PackedScene::7815400113507742529::1731093268::0::1::::<><>::res://scenes/world/clouds.gd<>res://shaders/cloud_sdf.gdshader<>res://shaders/buffer_sky.gdshader
+::res://scripts/::1731093220
 hud.gd::GDScript::-1::1731087387::0::1::::<>CanvasLayer<>::
 player_movement.gd::GDScript::-1::1731088063::0::1::::<>CharacterBody3D<>::
-spring_arm_3d.gd::GDScript::-1::1731086966::0::1::::<>SpringArm3D<>::
-wind_visuals.gd::GDScript::-1::1731092297::0::1::::<>Node3D<>::
+wind_visuals.gd::GDScript::-1::1731092777::0::1::::<>Node3D<>::
 ::res://shaders/::1731086966
 buffer_sky.gdshader::Shader::-1::1731086966::0::1::::<><>::
 cloud_functions.gdshaderinc::ShaderInclude::-1::1731086966::0::1::::<><>::

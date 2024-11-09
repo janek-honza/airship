@@ -1,0 +1,14 @@
+res://assets/materials/airship_moving_parts.tres::f80f3c6de14ae010e3d1957ae2e45ace::1731086966::res://.godot/exported/133200997/export-79e5c1ba0221e6ce194f136d3f3c90d9-airship_moving_parts.res
+res://assets/materials/airship_static_parts.tres::47db8abc819b279a033984bd867d1490::1731086966::res://.godot/exported/133200997/export-ae22ba5c00291832a78e7aee57953d42-airship_static_parts.res
+res://assets/materials/ground_basic.tres::ecc064e210f5d9421d18ea35b78225c1::1731086966::res://.godot/exported/133200997/export-24c2f720a4373688611910b63a4790be-ground_basic.res
+res://assets/materials/ground_object_basic.tres::53716d9f10867b804acb3bc989b847f1::1731086966::res://.godot/exported/133200997/export-467363dfef1c3dfcc653fdfec3e9ac7b-ground_object_basic.res
+res://assets/materials/wind.tres::f09a00a3d52450999a4b5462c9502dce::1731092904::res://.godot/exported/133200997/export-2c89dd9f4a8b4b4b4020d0a179bff5ce-wind.res
+res://scenes/basic/main.tscn::5333fa9ec64ae2e682000daf7c8f51f2::1731161950::res://.godot/exported/133200997/export-6aa48b8b079858fbb3f42ca8ddc55c1d-main.scn
+res://scenes/world/clouds.tscn::09c206bdc6042f44caddc1eb70896d56::1731093268::res://.godot/exported/133200997/export-c9de7c50fb99aee874ac704c442b9200-clouds.scn
+res://scenes/floater.tscn::23cf2099ff7989fcf825891a2dbbe8ff::1731085006::res://.godot/exported/133200997/export-a6233b4f22f32b90fd4502f13d4c5a23-floater.scn
+res://scenes/level_tutorial.tscn::4312a50ea29c4dc98014ecc02aac1f96::1731086966::res://.godot/exported/133200997/export-541bb414619c3b546f04438beada4b15-level_tutorial.scn
+res://scenes/player.tscn::3482ed7f22811c04388ae8489749dde2::1731161792::res://.godot/exported/133200997/export-234fb6894ec6226e856ab7f825500d3d-player.scn
+res://scenes/ring.tscn::cc46000aa9da6262119867dbc27c44a3::1731161792::res://.godot/exported/133200997/export-8c22af2b0b8ef70d931eef2363c47f7b-ring.scn
+res://scenes/wind_visuals.tscn::3b0134d9ed60204b961b72a686f4c62d::1731086966::res://.godot/exported/133200997/export-949e2453fd716bd788e2dbac7c0447ac-wind_visuals.scn
+res://textures/gradients/color_gradient_a.tres::de33db5c17850582668033623da70e86::1731086966::res://.godot/exported/133200997/export-316aba3b9c2e3b247a985c4b421faaf4-color_gradient_a.res
+res://textures/gradients/color_gradient_b.tres::c5de079c28233110a66b777cb2af8ae5::1731086966::res://.godot/exported/133200997/export-98ab2142d257b1d06f92d2d4b68bdf12-color_gradient_b.res

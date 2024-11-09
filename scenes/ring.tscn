@@ -1,13 +1,24 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfrw68b7015v4"]
+[gd_scene load_steps=6 format=3 uid="uid://dfrw68b7015v4"]
 
 [ext_resource type="PackedScene" uid="uid://uqkiofe41tkb" path="res://assets/3d models/ring.blend" id="1_sltga"]
-[ext_resource type="Texture2D" uid="uid://dqnvre4wve0hk" path="res://assets/textures/Kenny's prototype texture/Orange/texture_03.png" id="2_4w5ut"]
+[ext_resource type="Texture2D" uid="uid://dqnvre4wve0hk" path="res://textures/Kenny's prototype texture/Orange/texture_03.png" id="2_4w5ut"]
+[ext_resource type="Script" path="res://scripts/rings_area_3d.gd" id="3_ecjm3"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e0fe0"]
 albedo_texture = ExtResource("2_4w5ut")
 uv1_triplanar = true
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_cuumk"]
+height = 0.02
+
 [node name="ring" instance=ExtResource("1_sltga")]
 
 [node name="ring" parent="." index="0"]
 surface_material_override/0 = SubResource("StandardMaterial3D_e0fe0")
+
+[node name="Area3D" type="Area3D" parent="." index="1"]
+script = ExtResource("3_ecjm3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(-4.37114e-06, 100, 0, -100, -4.37114e-06, 0, 0, 0, 100, 0, 0, 0)
+shape = SubResource("CylinderShape3D_cuumk")
