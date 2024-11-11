@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx2hjeaukux26"]
+
+[ext_resource type="PackedScene" uid="uid://dxyjg5h2f7et3" path="res://assets/3d models/ciggar.blend" id="1_ju0r3"]
+[ext_resource type="Script" path="res://scripts/ciggar_animation_player.gd" id="2_m2ytt"]
+
+[node name="ciggar" instance=ExtResource("1_ju0r3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="left_engine_1_propeller" parent="." index="6"]
+transform = Transform3D(-0.096725, 0, 0, 0, 4.22798e-09, 0.096725, 0, -0.096725, 4.22798e-09, -3.56135, -29.0542, -0.795032)
+
+[node name="left_engine_3_propeller" parent="." index="10"]
+transform = Transform3D(-0.0914842, -1.47859e-09, -0.0314065, -0.0314065, 8.86071e-09, 0.0914842, -1.47859e-09, -0.096725, 8.86071e-09, -28.5627, -0.356552, 24.268)
+
+[node name="left_engine_2_propeller" parent="." index="12"]
+transform = Transform3D(-0.096725, 0, 0, 0, 4.22798e-09, 0.096725, 0, -0.096725, 4.22798e-09, -28.5627, -0.35655, -15.8899)
+
+[node name="AnimationPlayer" parent="." index="14"]
+script = ExtResource("2_m2ytt")

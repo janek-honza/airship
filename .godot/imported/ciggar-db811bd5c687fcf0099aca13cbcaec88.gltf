@@ -1,6 +1,6 @@
 {
 	"asset":{
-		"generator":"Khronos glTF Blender I/O v4.2.70",
+		"generator":"Khronos glTF Blender I/O v4.2.69",
 		"version":"2.0"
 	},
 	"scene":0,
@@ -119,10 +119,10 @@
 			"mesh":6,
 			"name":"left_engine_1_propeller",
 			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
+				0.706104576587677,
+				0.037633784115314484,
+				0.037633780390024185,
+				0.706104576587677
 			],
 			"scale":[
 				-0.0967249870300293,
@@ -199,15 +199,15 @@
 			"mesh":10,
 			"name":"left_engine_3_propeller",
 			"rotation":[
-				0.7071068286895752,
-				0,
-				0,
-				0.7071068286895752
+				0.697462797164917,
+				0.1163858100771904,
+				0.1163858100771904,
+				0.697462797164917
 			],
 			"scale":[
+				-0.0967249944806099,
 				-0.0967249870300293,
-				-0.0967249870300293,
-				-0.0967249870300293
+				-0.0967249944806099
 			],
 			"translation":[
 				-28.562700271606445,
@@ -263,6 +263,65 @@
 				-28.562700271606445,
 				-0.356550008058548,
 				-14.392805099487305
+			]
+		}
+	],
+	"animations":[
+		{
+			"channels":[
+				{
+					"sampler":0,
+					"target":{
+						"node":6,
+						"path":"rotation"
+					}
+				}
+			],
+			"name":"left_engine_1_propellerAction",
+			"samplers":[
+				{
+					"input":47,
+					"interpolation":"LINEAR",
+					"output":48
+				}
+			]
+		},
+		{
+			"channels":[
+				{
+					"sampler":0,
+					"target":{
+						"node":10,
+						"path":"rotation"
+					}
+				}
+			],
+			"name":"left_engine_3_propellerAction",
+			"samplers":[
+				{
+					"input":49,
+					"interpolation":"LINEAR",
+					"output":50
+				}
+			]
+		},
+		{
+			"channels":[
+				{
+					"sampler":0,
+					"target":{
+						"node":12,
+						"path":"rotation"
+					}
+				}
+			],
+			"name":"left_engine_2_propellerAction",
+			"samplers":[
+				{
+					"input":47,
+					"interpolation":"LINEAR",
+					"output":51
+				}
 			]
 		}
 	],
@@ -873,6 +932,48 @@
 			"componentType":5126,
 			"count":192,
 			"type":"VEC2"
+		},
+		{
+			"bufferView":47,
+			"componentType":5126,
+			"count":60,
+			"max":[
+				2.5
+			],
+			"min":[
+				0.041666666666666664
+			],
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":48,
+			"componentType":5126,
+			"count":60,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":49,
+			"componentType":5126,
+			"count":58,
+			"max":[
+				2.5
+			],
+			"min":[
+				0.125
+			],
+			"type":"SCALAR"
+		},
+		{
+			"bufferView":50,
+			"componentType":5126,
+			"count":58,
+			"type":"VEC4"
+		},
+		{
+			"bufferView":51,
+			"componentType":5126,
+			"count":60,
+			"type":"VEC4"
 		}
 	],
 	"bufferViews":[
@@ -1157,11 +1258,36 @@
 			"byteLength":1536,
 			"byteOffset":91872,
 			"target":34962
+		},
+		{
+			"buffer":0,
+			"byteLength":240,
+			"byteOffset":93408
+		},
+		{
+			"buffer":0,
+			"byteLength":960,
+			"byteOffset":93648
+		},
+		{
+			"buffer":0,
+			"byteLength":232,
+			"byteOffset":94608
+		},
+		{
+			"buffer":0,
+			"byteLength":928,
+			"byteOffset":94840
+		},
+		{
+			"buffer":0,
+			"byteLength":960,
+			"byteOffset":95768
 		}
 	],
 	"buffers":[
 		{
-			"byteLength":93408,
+			"byteLength":96728,
 			"uri":"ciggar-db811bd5c687fcf0099aca13cbcaec88.bin"
 		}
 	]

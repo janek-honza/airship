@@ -1,137 +1,143 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1731158819
-icon.svg::CompressedTexture2D::2188413213162092773::1731086966::1731087075::1::::<><>::
-README.md::TextFile::-1::1731085006::0::1::::<><>::
-::res://assets/::1731086966
-::res://assets/3d models/::1731087079
-ciggar.blend::PackedScene::8823709276298646562::1731086966::1731087079::1::::<><>::
-floater.blend::PackedScene::440775702175988125::1731085006::1731087079::1::::<><>::
-ring.blend::PackedScene::1437429116376971649::1731086966::1731087079::1::::<><>::
-::res://assets/materials/::1731092904
-airship_moving_parts.tres::StandardMaterial3D::4993458076036135453::1731086966::0::1::::<><>::uid://b3efmmfdl0ivy::::res://textures/Kenny's prototype texture/Red/texture_03.png
-airship_static_parts.tres::StandardMaterial3D::1287210515205936449::1731086966::0::1::::<><>::uid://5feffogt3tgg::::res://textures/Kenny's prototype texture/Light/texture_03.png
-ground_basic.tres::StandardMaterial3D::8094505638351166377::1731086966::0::1::::<><>::uid://bjs3g1o0bd7cs::::res://textures/Kenny's prototype texture/Green/texture_03.png
-ground_object_basic.tres::StandardMaterial3D::3769365375668307501::1731086966::0::1::::<><>::uid://egw8w2p12ut2::::res://textures/Kenny's prototype texture/Dark/texture_02.png
-wind.tres::StandardMaterial3D::4884053786560585149::1731092904::0::1::::<><>::
-::res://scenes/::1731093282
-floater.tscn::PackedScene::6190939683187015213::1731085006::0::1::::<><>::uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>uid://slsf0rflb1jp::::res://materials/airship_static_parts.tres<>uid://cde4r338s6o6p::::res://materials/airship_moving_parts.tres<>res://scenes/animation_player.gd
-level_tutorial.tscn::PackedScene::2366652882504940339::1731086966::0::1::::<><>::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>res://scenes/ring.tscn
-player.tscn::PackedScene::3817524029099172305::1731093282::0::1::::<><>::res://scripts/player_movement.gd<>uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>uid://dxyjg5h2f7et3::::res://assets/3d models/ciggar.blend<>res://scripts/hud.gd
-ring.tscn::PackedScene::7546693560844153727::1731086966::0::1::::<><>::uid://uqkiofe41tkb::::res://assets/3d models/ring.blend<>uid://dqnvre4wve0hk::::res://assets/textures/Kenny's prototype texture/Orange/texture_03.png
-wind_visuals.tscn::PackedScene::7498132525800804928::1731086966::0::1::::<><>::res://scripts/wind_visuals.gd
-::res://scenes/basic/::1731093268
-debug.gd::GDScript::-1::1731086966::0::1::::<>Label<>::
-main.tscn::PackedScene::1041975475587002166::1731093268::0::1::::<><>::res://scenes/basic/debug.gd<>uid://djl3q6ynbkau0::::res://scenes/world/clouds.tscn<>uid://bwvwaoihjy78g::::res://textures/clouds/cloud_sdf_base.exr<>uid://437feiv1oerc::::res://textures/clouds/cloud_sdf_detail.exr<>res://scenes/basic/sunlight.gd<>uid://4ncscg8jgec0::::res://textures/clouds/cloud_volume_a.png<>uid://cwiiu5dy83cai::::res://textures/gradients/color_gradient_a.tres<>uid://de3ffaf51nbbs::::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>uid://dfrw68b7015v4::::res://scenes/ring.tscn
-sunlight.gd::GDScript::-1::1731086966::0::1::::<>DirectionalLight3D<>::
-::res://scenes/world/::1731093268
-clouds.gd::GDScript::-1::1731086966::0::1::::<>Node<>::
-clouds.tscn::PackedScene::7815400113507742529::1731093268::0::1::::<><>::res://scenes/world/clouds.gd<>res://shaders/cloud_sdf.gdshader<>res://shaders/buffer_sky.gdshader
-::res://scripts/::1731093220
-hud.gd::GDScript::-1::1731087387::0::1::::<>CanvasLayer<>::
-player_movement.gd::GDScript::-1::1731088063::0::1::::<>CharacterBody3D<>::
-wind_visuals.gd::GDScript::-1::1731092777::0::1::::<>Node3D<>::
-::res://shaders/::1731086966
-buffer_sky.gdshader::Shader::-1::1731086966::0::1::::<><>::
-cloud_functions.gdshaderinc::ShaderInclude::-1::1731086966::0::1::::<><>::
-cloud_sdf.gdshader::Shader::-1::1731086966::0::1::::<><>::
-ORIGINAL_sky_shader.gdshader::Shader::-1::1731086966::0::1::::<><>::
-::res://textures/::1731086966
-::res://textures/clouds/::1731087076
-cloud_density_a.png::CompressedTexture2D::8208423371921425963::1731086966::1731087076::1::::<><>::
-cloud_sdf_base.exr::CompressedTexture3D::3975263698422324760::1731086966::1731087075::1::::<><>::
-cloud_sdf_detail.exr::CompressedTexture3D::2095231138795944196::1731086966::1731087075::1::::<><>::
-cloud_sdf_detail_b.exr::CompressedTexture3D::6838174397576892472::1731086966::1731087075::1::::<><>::
-cloud_volume_a.png::CompressedTexture3D::2062467070408700621::1731086966::1731087075::1::::<><>::
-::res://textures/default/::1731087076
-blue.png::CompressedTexture2D::5629386768044647238::1731086966::1731087076::1::::<><>::
-green.png::CompressedTexture2D::355060272235857024::1731086966::1731087076::1::::<><>::
-grey_128.png::CompressedTexture2D::1062678152225043634::1731086966::1731087076::1::::<><>::
-red.png::CompressedTexture2D::5303607527765170545::1731086966::1731087076::1::::<><>::
-::res://textures/gradients/::1731086966
-color_gradient_a.tres::Gradient::6334033982746192064::1731086966::0::1::::<><>::
-color_gradient_b.tres::Gradient::7421467777035403709::1731086966::0::1::::<><>::
-::res://textures/Kenny's prototype texture/::1731086966
-::res://textures/Kenny's prototype texture/Dark/::1731087076
-texture_01.png::CompressedTexture2D::3941389554152779126::1731086966::1731087076::1::::<><>::
-texture_02.png::CompressedTexture2D::294537544056995465::1731086966::1731087076::1::::<><>::
-texture_03.png::CompressedTexture2D::7923125666177940242::1731086966::1731087076::1::::<><>::
-texture_04.png::CompressedTexture2D::5170077673020183179::1731086966::1731087076::1::::<><>::
-texture_05.png::CompressedTexture2D::433572991185701352::1731086966::1731087076::1::::<><>::
-texture_06.png::CompressedTexture2D::8822191825115941584::1731086966::1731087076::1::::<><>::
-texture_07.png::CompressedTexture2D::2265462146259071396::1731086966::1731087076::1::::<><>::
-texture_08.png::CompressedTexture2D::2748609406140664825::1731086966::1731087076::1::::<><>::
-texture_09.png::CompressedTexture2D::2225389629360142144::1731086966::1731087076::1::::<><>::
-texture_10.png::CompressedTexture2D::9011196542410847723::1731086966::1731087076::1::::<><>::
-texture_11.png::CompressedTexture2D::1847898706857443099::1731086966::1731087076::1::::<><>::
-texture_12.png::CompressedTexture2D::8425848248024862948::1731086966::1731087076::1::::<><>::
-texture_13.png::CompressedTexture2D::671487676782080740::1731086966::1731087076::1::::<><>::
-::res://textures/Kenny's prototype texture/Green/::1731087076
-texture_01.png::CompressedTexture2D::1270168992265804855::1731086966::1731087076::1::::<><>::
-texture_02.png::CompressedTexture2D::7537336884835881228::1731086966::1731087076::1::::<><>::
-texture_03.png::CompressedTexture2D::3056991254941101342::1731086966::1731087076::1::::<><>::
-texture_04.png::CompressedTexture2D::6641424740309074995::1731086966::1731087076::1::::<><>::
-texture_05.png::CompressedTexture2D::360730318939818506::1731086966::1731087076::1::::<><>::
-texture_06.png::CompressedTexture2D::6312530419891707868::1731086966::1731087076::1::::<><>::
-texture_07.png::CompressedTexture2D::4155189233256422653::1731086966::1731087076::1::::<><>::
-texture_08.png::CompressedTexture2D::1443479825829849253::1731086966::1731087076::1::::<><>::
-texture_09.png::CompressedTexture2D::6715690962871125487::1731086966::1731087076::1::::<><>::
-texture_10.png::CompressedTexture2D::456161364616376931::1731086966::1731087076::1::::<><>::
-texture_11.png::CompressedTexture2D::14522311579395050::1731086966::1731087076::1::::<><>::
-texture_12.png::CompressedTexture2D::4496242545273258097::1731086966::1731087076::1::::<><>::
-texture_13.png::CompressedTexture2D::5441318016266208289::1731086966::1731087076::1::::<><>::
-::res://textures/Kenny's prototype texture/Light/::1731087076
-texture_01.png::CompressedTexture2D::3709813050865983370::1731086966::1731087076::1::::<><>::
-texture_02.png::CompressedTexture2D::6354411829594888210::1731086966::1731087076::1::::<><>::
-texture_03.png::CompressedTexture2D::2116239279394998894::1731086966::1731087076::1::::<><>::
-texture_04.png::CompressedTexture2D::7144282815089195342::1731086966::1731087076::1::::<><>::
-texture_05.png::CompressedTexture2D::4443477074560211540::1731086966::1731087076::1::::<><>::
-texture_06.png::CompressedTexture2D::8378861014410018189::1731086966::1731087076::1::::<><>::
-texture_07.png::CompressedTexture2D::3726383312615741016::1731086966::1731087076::1::::<><>::
-texture_08.png::CompressedTexture2D::9069002818694652063::1731086966::1731087076::1::::<><>::
-texture_09.png::CompressedTexture2D::3872482542979063887::1731086966::1731087076::1::::<><>::
-texture_10.png::CompressedTexture2D::5813391526534850958::1731086966::1731087076::1::::<><>::
-texture_11.png::CompressedTexture2D::2942500503002619467::1731086966::1731087075::1::::<><>::
-texture_12.png::CompressedTexture2D::659261304959718992::1731086966::1731087075::1::::<><>::
-texture_13.png::CompressedTexture2D::5541402566823993899::1731086966::1731087075::1::::<><>::
-::res://textures/Kenny's prototype texture/Orange/::1731087075
-texture_01.png::CompressedTexture2D::3315740047509035509::1731086966::1731087075::1::::<><>::
-texture_02.png::CompressedTexture2D::6422804862884284231::1731086966::1731087075::1::::<><>::
-texture_03.png::CompressedTexture2D::8310426131355634764::1731086966::1731087075::1::::<><>::
-texture_04.png::CompressedTexture2D::5514383743721020290::1731086966::1731087075::1::::<><>::
-texture_05.png::CompressedTexture2D::7491363653756438489::1731086966::1731087075::1::::<><>::
-texture_06.png::CompressedTexture2D::4342200984403642996::1731086966::1731087075::1::::<><>::
-texture_07.png::CompressedTexture2D::7821612278312413600::1731086966::1731087075::1::::<><>::
-texture_08.png::CompressedTexture2D::5312972872186563217::1731086966::1731087075::1::::<><>::
-texture_09.png::CompressedTexture2D::3254655735645521754::1731086966::1731087075::1::::<><>::
-texture_10.png::CompressedTexture2D::8910408525226886333::1731086966::1731087075::1::::<><>::
-texture_11.png::CompressedTexture2D::900547672090715959::1731086966::1731087075::1::::<><>::
-texture_12.png::CompressedTexture2D::7530189877393314810::1731086966::1731087075::1::::<><>::
-texture_13.png::CompressedTexture2D::1706361181256704753::1731086966::1731087075::1::::<><>::
-::res://textures/Kenny's prototype texture/Purple/::1731087076
-texture_01.png::CompressedTexture2D::9100749497327586266::1731086966::1731087075::1::::<><>::
-texture_02.png::CompressedTexture2D::2428663486729262955::1731086966::1731087075::1::::<><>::
-texture_03.png::CompressedTexture2D::537872755573054123::1731086966::1731087075::1::::<><>::
-texture_04.png::CompressedTexture2D::388425990912403060::1731086966::1731087075::1::::<><>::
-texture_05.png::CompressedTexture2D::1597730957289696323::1731086966::1731087075::1::::<><>::
-texture_06.png::CompressedTexture2D::5104300363895402815::1731086966::1731087076::1::::<><>::
-texture_07.png::CompressedTexture2D::4779059203528745412::1731086966::1731087076::1::::<><>::
-texture_08.png::CompressedTexture2D::4410352940185176598::1731086966::1731087076::1::::<><>::
-texture_09.png::CompressedTexture2D::7675243427241150825::1731086966::1731087076::1::::<><>::
-texture_10.png::CompressedTexture2D::3488251572045169936::1731086966::1731087075::1::::<><>::
-texture_11.png::CompressedTexture2D::9004789204642556796::1731086966::1731087075::1::::<><>::
-texture_12.png::CompressedTexture2D::8375825006282370923::1731086966::1731087075::1::::<><>::
-texture_13.png::CompressedTexture2D::7700142060148026019::1731086966::1731087075::1::::<><>::
-::res://textures/Kenny's prototype texture/Red/::1731087075
-texture_01.png::CompressedTexture2D::4633958059758401954::1731086966::1731087075::1::::<><>::
-texture_02.png::CompressedTexture2D::1330092485936394937::1731086966::1731087075::1::::<><>::
-texture_03.png::CompressedTexture2D::4360291469221160346::1731086966::1731087075::1::::<><>::
-texture_04.png::CompressedTexture2D::1795741612105671630::1731086966::1731087075::1::::<><>::
-texture_05.png::CompressedTexture2D::3801554741370309575::1731086966::1731087075::1::::<><>::
-texture_06.png::CompressedTexture2D::2684404843585381720::1731086966::1731087075::1::::<><>::
-texture_07.png::CompressedTexture2D::4778017950910121798::1731086966::1731087075::1::::<><>::
-texture_08.png::CompressedTexture2D::625354715367255310::1731086966::1731087075::1::::<><>::
-texture_09.png::CompressedTexture2D::4756696086346212849::1731086966::1731087075::1::::<><>::
-texture_10.png::CompressedTexture2D::6585559281444051102::1731086966::1731087075::1::::<><>::
-texture_11.png::CompressedTexture2D::8688067837534031853::1731086966::1731087075::1::::<><>::
-texture_12.png::CompressedTexture2D::6066020250662821254::1731086966::1731087075::1::::<><>::
-texture_13.png::CompressedTexture2D::2841629787146670663::1731086966::1731087075::1::::<><>::
+::res://::1731364626
+export_presets.cfg::TextFile::-1::1731248293::0::1::::<><>::
+icon.svg::CompressedTexture2D::2188413213162092773::1731248293::1731254706::1::::<><>::
+README.md::TextFile::-1::1730654881::0::1::::<><>::
+::res://assets/::1731248293
+::res://assets/3d models/::1731321664
+ciggar.blend::PackedScene::8823709276298646562::1731254682::1731364631::1::::<><>::
+floater.blend::PackedScene::440775702175988125::1730848362::1731254709::1::::<><>::
+medium.blend::PackedScene::8124624631718212316::1731321664::1731364631::1::::<><>::
+ring.blend::PackedScene::1437429116376971649::1731248293::1731254709::1::::<><>::
+::res://assets/materials/::1731248293
+airship_moving_parts.tres::StandardMaterial3D::4993458076036135453::1731248293::0::1::::<><>::uid://b3efmmfdl0ivy::::res://textures/Kenny's prototype texture/Red/texture_03.png
+airship_static_parts.tres::StandardMaterial3D::1287210515205936449::1731248293::0::1::::<><>::uid://5feffogt3tgg::::res://textures/Kenny's prototype texture/Light/texture_03.png
+ground_basic.tres::StandardMaterial3D::8094505638351166377::1731248293::0::1::::<><>::uid://bjs3g1o0bd7cs::::res://textures/Kenny's prototype texture/Green/texture_03.png
+ground_object_basic.tres::StandardMaterial3D::3769365375668307501::1731248293::0::1::::<><>::uid://egw8w2p12ut2::::res://textures/Kenny's prototype texture/Dark/texture_02.png
+wind.tres::StandardMaterial3D::4884053786560585149::1731248293::0::1::::<><>::
+::res://scenes/::1731259929
+ciggar.tscn::PackedScene::8829784956224457297::1731259929::0::1::::<><>::uid://dxyjg5h2f7et3::::res://assets/3d models/ciggar.blend<>res://scripts/ciggar_animation_player.gd
+level_tutorial.tscn::PackedScene::2366652882504940339::1731248293::0::1::::<><>::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>res://scenes/ring.tscn
+player.tscn::PackedScene::3817524029099172305::1731258921::0::1::::<><>::res://scripts/player_movement.gd<>uid://gjrrngysyos8::::res://assets/3d models/floater.blend<>res://scripts/hud.gd<>uid://dx2hjeaukux26::::res://scenes/ciggar.tscn
+ring.tscn::PackedScene::7546693560844153727::1731258858::0::1::::<><>::uid://uqkiofe41tkb::::res://assets/3d models/ring.blend<>uid://dqnvre4wve0hk::::res://textures/Kenny's prototype texture/Orange/texture_03.png<>res://scripts/rings_area_3d.gd
+wind_visuals.tscn::PackedScene::7498132525800804928::1731248293::0::1::::<><>::res://scripts/wind_visuals.gd
+::res://scenes/basic/::1731259243
+debug.gd::GDScript::-1::1731248293::0::1::::<>Label<>::
+main.tscn::PackedScene::1041975475587002166::1731259243::0::1::::<><>::res://scenes/basic/debug.gd<>uid://djl3q6ynbkau0::::res://scenes/world/clouds.tscn<>uid://bwvwaoihjy78g::::res://textures/clouds/cloud_sdf_base.exr<>uid://437feiv1oerc::::res://textures/clouds/cloud_sdf_detail.exr<>res://scenes/basic/sunlight.gd<>uid://4ncscg8jgec0::::res://textures/clouds/cloud_volume_a.png<>uid://cwiiu5dy83cai::::res://textures/gradients/color_gradient_a.tres<>uid://de3ffaf51nbbs::::res://scenes/wind_visuals.tscn<>uid://bunice3vh7vor::::res://scenes/player.tscn<>res://scripts/rings.gd<>uid://dfrw68b7015v4::::res://scenes/ring.tscn
+sunlight.gd::GDScript::-1::1731248293::0::1::::<>DirectionalLight3D<>::
+::res://scenes/world/::1731248293
+clouds.gd::GDScript::-1::1731248293::0::1::::<>Node<>::
+clouds.tscn::PackedScene::7815400113507742529::1731248293::0::1::::<><>::res://scenes/world/clouds.gd<>res://shaders/cloud_sdf.gdshader<>res://shaders/buffer_sky.gdshader
+::res://scripts/::1731259243
+ciggar_animation_player.gd::GDScript::-1::1731258921::0::1::::<>AnimationPlayer<>::
+global.gd::GDScript::-1::1731256987::0::1::::<>Node<>::
+hud.gd::GDScript::-1::1731248293::0::1::::<>CanvasLayer<>::
+player_movement.gd::GDScript::-1::1731257848::0::1::::<>CharacterBody3D<>::
+rings.gd::GDScript::-1::1731259243::0::1::::<>Node3D<>::
+rings_area_3d.gd::GDScript::-1::1731248293::0::1::::<>Area3D<>::
+wind_visuals.gd::GDScript::-1::1731248293::0::1::::<>Node3D<>::
+::res://shaders/::1731248293
+buffer_sky.gdshader::Shader::-1::1731248293::0::1::::<><>::
+cloud_functions.gdshaderinc::ShaderInclude::-1::1731248293::0::1::::<><>::
+cloud_sdf.gdshader::Shader::-1::1731248293::0::1::::<><>::
+ORIGINAL_sky_shader.gdshader::Shader::-1::1731248293::0::1::::<><>::
+::res://textures/::1731248293
+::res://textures/clouds/::1731254706
+cloud_density_a.png::CompressedTexture2D::8208423371921425963::1731248293::1731254706::1::::<><>::
+cloud_sdf_base.exr::CompressedTexture3D::3975263698422324760::1731248293::1731254706::1::::<><>::
+cloud_sdf_detail.exr::CompressedTexture3D::2095231138795944196::1731248293::1731254706::1::::<><>::
+cloud_sdf_detail_b.exr::CompressedTexture3D::6838174397576892472::1731248293::1731254706::1::::<><>::
+cloud_volume_a.png::CompressedTexture3D::2062467070408700621::1731248293::1731254706::1::::<><>::
+::res://textures/default/::1731254706
+blue.png::CompressedTexture2D::5629386768044647238::1731248293::1731254706::1::::<><>::
+green.png::CompressedTexture2D::355060272235857024::1731248293::1731254706::1::::<><>::
+grey_128.png::CompressedTexture2D::1062678152225043634::1731248293::1731254706::1::::<><>::
+red.png::CompressedTexture2D::5303607527765170545::1731248293::1731254706::1::::<><>::
+::res://textures/gradients/::1731248293
+color_gradient_a.tres::Gradient::6334033982746192064::1731248293::0::1::::<><>::
+color_gradient_b.tres::Gradient::7421467777035403709::1731248293::0::1::::<><>::
+::res://textures/Kenny's prototype texture/::1731248293
+::res://textures/Kenny's prototype texture/Dark/::1731254706
+texture_01.png::CompressedTexture2D::3941389554152779126::1731248293::1731254706::1::::<><>::
+texture_02.png::CompressedTexture2D::294537544056995465::1731248293::1731254706::1::::<><>::
+texture_03.png::CompressedTexture2D::7923125666177940242::1731248293::1731254706::1::::<><>::
+texture_04.png::CompressedTexture2D::5170077673020183179::1731248293::1731254706::1::::<><>::
+texture_05.png::CompressedTexture2D::433572991185701352::1731248293::1731254706::1::::<><>::
+texture_06.png::CompressedTexture2D::8822191825115941584::1731248293::1731254706::1::::<><>::
+texture_07.png::CompressedTexture2D::2265462146259071396::1731248293::1731254706::1::::<><>::
+texture_08.png::CompressedTexture2D::2748609406140664825::1731248293::1731254706::1::::<><>::
+texture_09.png::CompressedTexture2D::2225389629360142144::1731248293::1731254706::1::::<><>::
+texture_10.png::CompressedTexture2D::9011196542410847723::1731248293::1731254706::1::::<><>::
+texture_11.png::CompressedTexture2D::1847898706857443099::1731248293::1731254706::1::::<><>::
+texture_12.png::CompressedTexture2D::8425848248024862948::1731248293::1731254706::1::::<><>::
+texture_13.png::CompressedTexture2D::671487676782080740::1731248293::1731254706::1::::<><>::
+::res://textures/Kenny's prototype texture/Green/::1731254707
+texture_01.png::CompressedTexture2D::1270168992265804855::1731248293::1731254706::1::::<><>::
+texture_02.png::CompressedTexture2D::7537336884835881228::1731248293::1731254706::1::::<><>::
+texture_03.png::CompressedTexture2D::3056991254941101342::1731248293::1731254707::1::::<><>::
+texture_04.png::CompressedTexture2D::6641424740309074995::1731248293::1731254707::1::::<><>::
+texture_05.png::CompressedTexture2D::360730318939818506::1731248293::1731254707::1::::<><>::
+texture_06.png::CompressedTexture2D::6312530419891707868::1731248293::1731254707::1::::<><>::
+texture_07.png::CompressedTexture2D::4155189233256422653::1731248293::1731254707::1::::<><>::
+texture_08.png::CompressedTexture2D::1443479825829849253::1731248293::1731254707::1::::<><>::
+texture_09.png::CompressedTexture2D::6715690962871125487::1731248293::1731254707::1::::<><>::
+texture_10.png::CompressedTexture2D::456161364616376931::1731248293::1731254707::1::::<><>::
+texture_11.png::CompressedTexture2D::14522311579395050::1731248293::1731254707::1::::<><>::
+texture_12.png::CompressedTexture2D::4496242545273258097::1731248293::1731254707::1::::<><>::
+texture_13.png::CompressedTexture2D::5441318016266208289::1731248293::1731254707::1::::<><>::
+::res://textures/Kenny's prototype texture/Light/::1731254707
+texture_01.png::CompressedTexture2D::3709813050865983370::1731248293::1731254707::1::::<><>::
+texture_02.png::CompressedTexture2D::6354411829594888210::1731248293::1731254707::1::::<><>::
+texture_03.png::CompressedTexture2D::2116239279394998894::1731248293::1731254707::1::::<><>::
+texture_04.png::CompressedTexture2D::7144282815089195342::1731248293::1731254707::1::::<><>::
+texture_05.png::CompressedTexture2D::4443477074560211540::1731248293::1731254707::1::::<><>::
+texture_06.png::CompressedTexture2D::8378861014410018189::1731248293::1731254707::1::::<><>::
+texture_07.png::CompressedTexture2D::3726383312615741016::1731248293::1731254706::1::::<><>::
+texture_08.png::CompressedTexture2D::9069002818694652063::1731248293::1731254706::1::::<><>::
+texture_09.png::CompressedTexture2D::3872482542979063887::1731248293::1731254706::1::::<><>::
+texture_10.png::CompressedTexture2D::5813391526534850958::1731248293::1731254706::1::::<><>::
+texture_11.png::CompressedTexture2D::2942500503002619467::1731248293::1731254706::1::::<><>::
+texture_12.png::CompressedTexture2D::659261304959718992::1731248293::1731254706::1::::<><>::
+texture_13.png::CompressedTexture2D::5541402566823993899::1731248293::1731254706::1::::<><>::
+::res://textures/Kenny's prototype texture/Orange/::1731254706
+texture_01.png::CompressedTexture2D::3315740047509035509::1731248293::1731254706::1::::<><>::
+texture_02.png::CompressedTexture2D::6422804862884284231::1731248293::1731254706::1::::<><>::
+texture_03.png::CompressedTexture2D::8310426131355634764::1731248293::1731254706::1::::<><>::
+texture_04.png::CompressedTexture2D::5514383743721020290::1731248293::1731254706::1::::<><>::
+texture_05.png::CompressedTexture2D::7491363653756438489::1731248293::1731254706::1::::<><>::
+texture_06.png::CompressedTexture2D::4342200984403642996::1731248293::1731254706::1::::<><>::
+texture_07.png::CompressedTexture2D::7821612278312413600::1731248293::1731254706::1::::<><>::
+texture_08.png::CompressedTexture2D::5312972872186563217::1731248293::1731254706::1::::<><>::
+texture_09.png::CompressedTexture2D::3254655735645521754::1731248293::1731254706::1::::<><>::
+texture_10.png::CompressedTexture2D::8910408525226886333::1731248293::1731254706::1::::<><>::
+texture_11.png::CompressedTexture2D::900547672090715959::1731248293::1731254706::1::::<><>::
+texture_12.png::CompressedTexture2D::7530189877393314810::1731248293::1731254706::1::::<><>::
+texture_13.png::CompressedTexture2D::1706361181256704753::1731248293::1731254706::1::::<><>::
+::res://textures/Kenny's prototype texture/Purple/::1731254706
+texture_01.png::CompressedTexture2D::9100749497327586266::1731248293::1731254706::1::::<><>::
+texture_02.png::CompressedTexture2D::2428663486729262955::1731248293::1731254706::1::::<><>::
+texture_03.png::CompressedTexture2D::537872755573054123::1731248293::1731254706::1::::<><>::
+texture_04.png::CompressedTexture2D::388425990912403060::1731248293::1731254706::1::::<><>::
+texture_05.png::CompressedTexture2D::1597730957289696323::1731248293::1731254706::1::::<><>::
+texture_06.png::CompressedTexture2D::5104300363895402815::1731248293::1731254706::1::::<><>::
+texture_07.png::CompressedTexture2D::4779059203528745412::1731248293::1731254706::1::::<><>::
+texture_08.png::CompressedTexture2D::4410352940185176598::1731248293::1731254706::1::::<><>::
+texture_09.png::CompressedTexture2D::7675243427241150825::1731248293::1731254706::1::::<><>::
+texture_10.png::CompressedTexture2D::3488251572045169936::1731248293::1731254706::1::::<><>::
+texture_11.png::CompressedTexture2D::9004789204642556796::1731248293::1731254706::1::::<><>::
+texture_12.png::CompressedTexture2D::8375825006282370923::1731248293::1731254706::1::::<><>::
+texture_13.png::CompressedTexture2D::7700142060148026019::1731248293::1731254706::1::::<><>::
+::res://textures/Kenny's prototype texture/Red/::1731254706
+texture_01.png::CompressedTexture2D::4633958059758401954::1731248293::1731254706::1::::<><>::
+texture_02.png::CompressedTexture2D::1330092485936394937::1731248293::1731254706::1::::<><>::
+texture_03.png::CompressedTexture2D::4360291469221160346::1731248293::1731254706::1::::<><>::
+texture_04.png::CompressedTexture2D::1795741612105671630::1731248293::1731254706::1::::<><>::
+texture_05.png::CompressedTexture2D::3801554741370309575::1731248293::1731254706::1::::<><>::
+texture_06.png::CompressedTexture2D::2684404843585381720::1731248293::1731254706::1::::<><>::
+texture_07.png::CompressedTexture2D::4778017950910121798::1731248293::1731254706::1::::<><>::
+texture_08.png::CompressedTexture2D::625354715367255310::1731248293::1731254706::1::::<><>::
+texture_09.png::CompressedTexture2D::4756696086346212849::1731248293::1731254706::1::::<><>::
+texture_10.png::CompressedTexture2D::6585559281444051102::1731248293::1731254706::1::::<><>::
+texture_11.png::CompressedTexture2D::8688067837534031853::1731248293::1731254706::1::::<><>::
+texture_12.png::CompressedTexture2D::6066020250662821254::1731248293::1731254706::1::::<><>::
+texture_13.png::CompressedTexture2D::2841629787146670663::1731248293::1731254706::1::::<><>::

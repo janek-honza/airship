@@ -17,6 +17,10 @@ func _input(event):
 			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		else:
 			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+			
+	
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
 
 func update_controls_visibility():
 	if controls_hidden_status == true:
@@ -32,4 +36,6 @@ Increase/Decrease Throttle: Scroll wheel
 Pitch Up/Down: W/S
 Yaw Left/Right: A/D
 
-Free/Capture Mouse: Esc"
+Free/Capture Mouse: Middle Mouse Button
+
+Quit: Esc"

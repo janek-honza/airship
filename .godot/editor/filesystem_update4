@@ -1,6 +1,8 @@
 res://scenes/basic/main.tscn
 res://scenes/player.tscn
-res://scripts/player_movement.gd
 res://scenes/ring.tscn
-res://scripts/rings.gd
-res://scripts/rings_area_3d.gd
+res://scenes/ciggar.tscn
+res://scripts/global.gd
+res://assets/materials/wind.tres
+res://scripts/wind_visuals.gd
+res://scripts/hud.gd

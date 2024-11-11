@@ -2,9 +2,9 @@ extends Node3D
 
 @export var player_path: String = "../Player"
 @export var spawn_radius: float = 100.0
-@export var wind_direction: Vector3 = Vector3(1, 0, -1)
+@export var wind_direction: Vector3 = global.wind_direction
 @export var wind_speed: float = 15.0
-@export var trail_lifetime: float = 1.5
+@export var trail_lifetime: float = 2.0
 @export var spawn_interval: float = 0.2
 @export var max_trails: int = 20
 
@@ -60,7 +60,9 @@ func _ready():
 func setup_trail_scene():
 	# Create the wind trail mesh resource
 	var mesh = ImmediateMesh.new()
-	var material = load("res://assets/materials/wind.tres") as Material
+	var material = StandardMaterial3D.new()
+	material.cull_mode = BaseMaterial3D.CULL_DISABLED
+	
 	
 	# Create the trail node
 	var trail_node = WindTrail.new()
@@ -102,7 +104,7 @@ func spawn_trail():
 	var random_radius = randf_range(2.0, spawn_radius)
 	var spawn_pos = player.global_position + Vector3(
 		cos(random_angle) * random_radius,
-		randf_range(0.5, 2.5),  # Random height
+		randf_range(-50, 50),  # Random height
 		sin(random_angle) * random_radius
 	)
 	

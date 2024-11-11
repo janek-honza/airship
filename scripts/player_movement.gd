@@ -4,17 +4,19 @@ extends CharacterBody3D
 @onready var Ypivot = $XPivot/YPivot
 @onready var HUD = $HUD/Altitude_Throttle_Mass
 @onready var visuals = $visuals
-@onready var airship_type = "floater"
 @onready var Debug = $HUD/Debug
-#@onready var wind = get_node("../wind_visuals") Not working direct node access, the line below is a workaround to be removed when this is fixed.
-#var wind_direction: Vector3 = wind.wind_direction
-var wind_direction: Vector3 = Vector3(1, 0, -1)
 
 @export var sensitivity = 0.1
-@export var mass = 0
-@export var throttle = 0
-@export var left_engine_rpm = 0 #To be used in animation player
-@export var right_engine_rpm = 0
+@export_enum ("floater", "dreadnought", "ciggar") var airship_type = "floater"
+
+signal throttle_both_engines(throttle)
+signal left_turning_throttle_modifier
+signal right_turning_throttle_modifier
+
+var mass = 0
+var throttle = 0
+var left_engine_rpm = 0 #To be used in animation player
+var right_engine_rpm = 0 #To be used in animation player
 
 #Vehicle specific modifiers
 var engine_efficiency = 0.25
@@ -52,9 +54,11 @@ func _input(event):
 	
 	if Input.is_action_pressed("throttle_up") and throttle < throttle_max:
 		throttle = min(throttle + 1, 100)
+		emit_signal("throttle_both_engines", throttle)
 	
 	if Input.is_action_pressed("throttle_down") and throttle > throttle_min:
 		throttle = max(throttle - 1, 0)
+		emit_signal("throttle_both_engines", throttle)
 	
 	pitch_input = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
 	
@@ -86,7 +90,7 @@ func _physics_process(delta):
 		fill_percent_ballonets = max(fill_percent_ballonets - delta, target_fill_percent_ballonets)
 	mass = base_mass + cargo_weight + max_mass_of_ballonets * fill_percent_ballonets/100
 	
-	velocity = engine_direction * engine_speed + Vector3.UP * (displacment - mass)/10 + wind_direction * (sin(wind_direction.angle_to(global_transform.basis.z)) + 1)
+	velocity = engine_direction * engine_speed + Vector3.UP * (displacment - mass)/10 + global.wind_direction * (sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)
 	
 	self.rotation.x = lerp(self.rotation.x, -float(pitch_input) * max_pitch_degree_in_pitch/360 * (relative_speed_forward / 10), pitch_level_speed * delta)
 	

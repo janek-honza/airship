@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
 [ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/floater.blend" id="2_m2vom"]
-[ext_resource type="PackedScene" uid="uid://dxyjg5h2f7et3" path="res://assets/3d models/ciggar.blend" id="3_3h5lj"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
+[ext_resource type="PackedScene" uid="uid://dx2hjeaukux26" path="res://scenes/ciggar.tscn" id="3_av8vt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
@@ -16,8 +16,7 @@ script = ExtResource("1_pxgg3")
 
 [node name="floater" parent="visuals" instance=ExtResource("2_m2vom")]
 
-[node name="ciggar" parent="visuals" instance=ExtResource("3_3h5lj")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+[node name="ciggar" parent="visuals" instance=ExtResource("3_av8vt")]
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -60,8 +59,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -316.0
+offset_left = -348.0
 offset_top = -23.0
+grow_horizontal = 0
 grow_vertical = 0
 bbcode_enabled = true
 text = "[b]Show/Hide controls: T[/b]
