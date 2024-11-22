@@ -1,5 +1,4 @@
 extends Node3D
-
 @export var player_path: String = "../Player"
 @export var spawn_radius: float = 100.0
 @export var wind_direction: Vector3 = global.wind_direction
@@ -7,7 +6,6 @@ extends Node3D
 @export var trail_lifetime: float = 2.0
 @export var spawn_interval: float = 0.2
 @export var max_trails: int = 20
-
 var player: Node3D
 var trail_scene: PackedScene
 var active_trails: Array[Node3D] = []
@@ -39,19 +37,19 @@ class WindTrail extends MeshInstance3D:
 		
 		var color = Color(1, 1, 1, alpha)
 		
-		# Start point
 		mesh.surface_set_color(color)
 		mesh.surface_add_vertex(Vector3.ZERO + right)
 		mesh.surface_set_color(color)
 		mesh.surface_add_vertex(Vector3.ZERO - right)
 		
-		# End point
-		mesh.surface_set_color(Color(1, 1, 1, 0))  # Fade to transparent
+		# End point (both sides fading)
+		mesh.surface_set_color(Color(1, 1, 1, 0))
 		mesh.surface_add_vertex(-direction * length + right)
 		mesh.surface_set_color(Color(1, 1, 1, 0))
 		mesh.surface_add_vertex(-direction * length - right)
 		
 		mesh.surface_end()
+		
 
 func _ready():
 	player = get_node_or_null(player_path)
@@ -62,7 +60,8 @@ func setup_trail_scene():
 	var mesh = ImmediateMesh.new()
 	var material = StandardMaterial3D.new()
 	material.cull_mode = BaseMaterial3D.CULL_DISABLED
-	
+	material.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	material.depth_draw_mode = BaseMaterial3D.DEPTH_DRAW_DISABLED  # Prevent shadow casting
 	
 	# Create the trail node
 	var trail_node = WindTrail.new()
@@ -75,6 +74,7 @@ func setup_trail_scene():
 	if result != OK:
 		push_warning("Failed to pack trail scene")
 
+# Rest of the script remains the same as before
 func _process(delta: float):
 	if not player:
 		return

@@ -1,8 +1,6 @@
-res://scenes/basic/main.tscn
 res://scenes/player.tscn
+res://scenes/basic/main.tscn
 res://scenes/ring.tscn
 res://scenes/ciggar.tscn
-res://scripts/global.gd
-res://assets/materials/wind.tres
 res://scripts/wind_visuals.gd
-res://scripts/hud.gd
+res://scripts/player.gdshader

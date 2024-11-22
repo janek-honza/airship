@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://o30gir8h2ufu"]
+[gd_scene load_steps=18 format=3 uid="uid://o30gir8h2ufu"]
 
 [ext_resource type="Script" path="res://scenes/basic/debug.gd" id="2_3sqim"]
 [ext_resource type="PackedScene" uid="uid://djl3q6ynbkau0" path="res://scenes/world/clouds.tscn" id="2_38qtq"]
@@ -40,6 +40,9 @@ adjustment_color_correction = SubResource("GradientTexture2D_7bm1i")
 auto_exposure_enabled = true
 auto_exposure_scale = 0.3
 
+[sub_resource type="PrismMesh" id="PrismMesh_mi0gm"]
+size = Vector3(300, 300, 300)
+
 [node name="main" type="Node"]
 
 [node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light", "camera") instance=ExtResource("2_38qtq")]
@@ -51,6 +54,7 @@ cloud_detail_texture = ExtResource("4_6liwh")
 cloud_volume_texture = ExtResource("5_1gko6")
 wind_vector = Vector2(10, -10)
 wind_uplift = 3.0
+cloud_base_height = 1200.0
 
 [node name="debug" type="Label" parent="."]
 visible = false
@@ -82,6 +86,7 @@ environment = SubResource("Environment_288wc")
 camera_attributes = SubResource("CameraAttributesPractical_vf470")
 
 [node name="wind_visuals" parent="." instance=ExtResource("8_esdj5")]
+visible = false
 player_path = "../player"
 
 [node name="player" parent="." instance=ExtResource("8_im5lg")]
@@ -155,6 +160,28 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6525, 113.053, 953.26)
 use_collision = true
 size = Vector3(50, 250, 50)
 
+[node name="mountain1" type="CSGMesh3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1110.74, 113.053, 203.36)
+use_collision = true
+mesh = SubResource("PrismMesh_mi0gm")
+
+[node name="mountain2" type="CSGMesh3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 618.744, 113.053, 203.36)
+use_collision = true
+mesh = SubResource("PrismMesh_mi0gm")
+
+[node name="bridge" type="CSGBox3D" parent="map"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 863.21, 174.712, 261.046)
+use_collision = true
+size = Vector3(50, 450, 100)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 523.072, 38, 1134)
+use_collision = true
+radius = 50.0
+height = 100.0
+sides = 50
+
 [node name="rings" type="Node3D" parent="."]
 script = ExtResource("10_5nlmb")
 
@@ -175,6 +202,30 @@ visible = false
 
 [node name="ring5" parent="rings" instance=ExtResource("10_koiw3")]
 transform = Transform3D(-0.51731, 0, 0.855798, 0, 1, 0, -0.855798, 0, -0.51731, 37.9155, 191.909, 1572.09)
+visible = false
+
+[node name="ring6" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 453.73, 183.909, 1693.11)
+visible = false
+
+[node name="ring7" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 744.085, 172.909, 1398.95)
+visible = false
+
+[node name="ring8" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 795.107, 107.909, 861.781)
+visible = false
+
+[node name="ring9" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 845.265, 78.9393, 299.781)
+visible = false
+
+[node name="ring10" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(-0.525472, 0, 0.850811, 0, 1, 0, -0.850811, 0, -0.525472, 845.265, 89.9393, -183.88)
+visible = false
+
+[node name="ring11" parent="rings" instance=ExtResource("10_koiw3")]
+transform = Transform3D(0.474088, 0, 0.880477, 0, 1, 0, -0.880477, 0, 0.474088, 321.332, 97.9393, -183.88)
 visible = false
 
 [node name="Camera3D" type="Camera3D" parent="."]

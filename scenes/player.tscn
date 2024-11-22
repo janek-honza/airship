@@ -1,12 +1,27 @@
-[gd_scene load_steps=6 format=3 uid="uid://bunice3vh7vor"]
+[gd_scene load_steps=10 format=3 uid="uid://bunice3vh7vor"]
 
 [ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
 [ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/floater.blend" id="2_m2vom"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
 [ext_resource type="PackedScene" uid="uid://dx2hjeaukux26" path="res://scenes/ciggar.tscn" id="3_av8vt"]
+[ext_resource type="Shader" path="res://scripts/player.gdshader" id="5_tqky0"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_x26nc"]
+shader = ExtResource("5_tqky0")
+shader_parameter/WIND_DIRECTION = Vector3(1, 0, -1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pqynt"]
+cull_mode = 2
+disable_receive_shadows = true
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_x46w3"]
+material = SubResource("StandardMaterial3D_pqynt")
+shape = 0
+size = 2.0
 
 [node name="player" type="CharacterBody3D"]
 motion_mode = 1
@@ -81,3 +96,13 @@ margin = 0.5
 [node name="Camera3D" type="Camera3D" parent="XPivot/YPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
 far = 20000.0
+
+[node name="wind_particles_test" type="GPUParticles3D" parent="."]
+layers = 2
+cast_shadow = 0
+lifetime = 10.0
+local_coords = true
+trail_enabled = true
+trail_lifetime = 3.0
+process_material = SubResource("ShaderMaterial_x26nc")
+draw_pass_1 = SubResource("RibbonTrailMesh_x46w3")
