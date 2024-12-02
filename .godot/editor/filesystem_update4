@@ -1,6 +1,6 @@
-res://scenes/player.tscn
 res://scenes/basic/main.tscn
+res://scenes/basic/debug.gd
+res://scripts/wind_particles.gdshader
+res://scenes/player.tscn
 res://scenes/ring.tscn
 res://scenes/ciggar.tscn
-res://scripts/wind_visuals.gd
-res://scripts/player.gdshader

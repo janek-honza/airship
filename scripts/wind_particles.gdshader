@@ -1,6 +1,7 @@
 shader_type particles;
 
 uniform vec3 WIND_DIRECTION = vec3(1.0, 0.0, -1.0);
+uniform vec3 PLAYER_POSITION = vec3(0.0, 0.0, 0.0);
 
 float rand_from_seed(in uint seed) {
   int k;
@@ -39,12 +40,12 @@ void start() {
 vec3 spawn_offset = normalize(WIND_DIRECTION) * 100.0;
 
   // Set the particle position
-  TRANSFORM[3].xyz = position * 50.0 - spawn_offset; // Adjust radius to desired scale
+  TRANSFORM[3].xyz = position * 20.0 - spawn_offset + PLAYER_POSITION; // Adjust radius to desired scale
 
 
   // Force uniform velocity in global direction (-1, 0, 1)
   // Note: Because Local Coords is enabled, this will be relative to the emitter
-  VELOCITY = normalize(WIND_DIRECTION) * 15.0; // Adjust magnitude if needed
+  VELOCITY = normalize(WIND_DIRECTION) * 30.0; // Adjust magnitude if needed
 }
 
 void process() {

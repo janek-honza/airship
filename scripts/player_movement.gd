@@ -57,7 +57,7 @@ func _input(event):
 		emit_signal("throttle_both_engines", throttle)
 	
 	if Input.is_action_pressed("throttle_down") and throttle > throttle_min:
-		throttle = max(throttle - 1, 0)
+		throttle = max(throttle - 1, -50)
 		emit_signal("throttle_both_engines", throttle)
 	
 	pitch_input = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
