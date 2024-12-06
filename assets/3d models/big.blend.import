@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dxyjg5h2f7et3"
-path="res://.godot/imported/ciggar.blend-db811bd5c687fcf0099aca13cbcaec88.scn"
+path="res://.godot/imported/big.blend-f40a60fa74c6a973ff27f0a861ab5b16.scn"
 
 [deps]
 
-source_file="res://assets/3d models/ciggar.blend"
-dest_files=["res://.godot/imported/ciggar.blend-db811bd5c687fcf0099aca13cbcaec88.scn"]
+source_file="res://assets/3d models/big.blend"
+dest_files=["res://.godot/imported/big.blend-f40a60fa74c6a973ff27f0a861ab5b16.scn"]
 
 [params]
 

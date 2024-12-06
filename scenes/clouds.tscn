@@ -1,6 +1,6 @@
 [gd_scene load_steps=11 format=3 uid="uid://djl3q6ynbkau0"]
 
-[ext_resource type="Script" path="res://scenes/world/clouds.gd" id="1_artgg"]
+[ext_resource type="Script" path="res://scripts/clouds.gd" id="1_artgg"]
 [ext_resource type="Shader" path="res://shaders/cloud_sdf.gdshader" id="3_p8xnm"]
 [ext_resource type="Shader" path="res://shaders/buffer_sky.gdshader" id="5_11ck4"]
 

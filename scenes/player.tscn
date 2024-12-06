@@ -1,11 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://bunice3vh7vor"]
+[gd_scene load_steps=14 format=3 uid="uid://bunice3vh7vor"]
 
-[ext_resource type="Script" path="res://scripts/player_movement.gd" id="1_pxgg3"]
-[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/floater.blend" id="2_m2vom"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_pxgg3"]
+[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/small.blend" id="2_m2vom"]
+[ext_resource type="Script" path="res://scripts/player_visuals.gd" id="2_tkhpu"]
+[ext_resource type="PackedScene" uid="uid://cp24j2wnbsb07" path="res://scenes/medium.tscn" id="3_3rt22"]
 [ext_resource type="Script" path="res://scripts/hud.gd" id="3_4kp0t"]
-[ext_resource type="PackedScene" uid="uid://dx2hjeaukux26" path="res://scenes/ciggar.tscn" id="3_av8vt"]
+[ext_resource type="PackedScene" uid="uid://dx2hjeaukux26" path="res://scenes/big.tscn" id="3_av8vt"]
 [ext_resource type="Shader" path="res://scripts/wind_particles.gdshader" id="5_tqky0"]
 [ext_resource type="Script" path="res://scripts/wind_particles.gd" id="6_wm2yc"]
+[ext_resource type="Script" path="res://scripts/spring_arm_3d.gd" id="7_25b7c"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
@@ -30,10 +33,14 @@ motion_mode = 1
 script = ExtResource("1_pxgg3")
 
 [node name="visuals" type="Node3D" parent="."]
+script = ExtResource("2_tkhpu")
 
-[node name="floater" parent="visuals" instance=ExtResource("2_m2vom")]
+[node name="small" parent="visuals" instance=ExtResource("2_m2vom")]
 
-[node name="ciggar" parent="visuals" instance=ExtResource("3_av8vt")]
+[node name="medium" parent="visuals" instance=ExtResource("3_3rt22")]
+visible = false
+
+[node name="big" parent="visuals" instance=ExtResource("3_av8vt")]
 visible = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -92,8 +99,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
 
 [node name="SpringArm3D" type="SpringArm3D" parent="XPivot/YPivot"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
-spring_length = 100.0
+spring_length = 200.0
 margin = 0.5
+script = ExtResource("7_25b7c")
 
 [node name="Camera3D" type="Camera3D" parent="XPivot/YPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)

@@ -49,5 +49,5 @@ vec3 spawn_offset = normalize(WIND_DIRECTION) * 100.0;
 }
 
 void process() {
-	
+
 }

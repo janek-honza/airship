@@ -1,21 +1,27 @@
-[gd_scene load_steps=20 format=3 uid="uid://o30gir8h2ufu"]
+[gd_scene load_steps=19 format=3 uid="uid://o30gir8h2ufu"]
 
-[ext_resource type="Script" path="res://scenes/basic/debug.gd" id="2_3sqim"]
-[ext_resource type="PackedScene" uid="uid://djl3q6ynbkau0" path="res://scenes/world/clouds.tscn" id="2_38qtq"]
-[ext_resource type="CompressedTexture3D" uid="uid://bwvwaoihjy78g" path="res://textures/clouds/cloud_sdf_base.exr" id="3_xqfxp"]
-[ext_resource type="CompressedTexture3D" uid="uid://437feiv1oerc" path="res://textures/clouds/cloud_sdf_detail.exr" id="4_6liwh"]
-[ext_resource type="Script" path="res://scenes/basic/sunlight.gd" id="4_uk33e"]
-[ext_resource type="CompressedTexture3D" uid="uid://4ncscg8jgec0" path="res://textures/clouds/cloud_volume_a.png" id="5_1gko6"]
-[ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="5_3hakk"]
-[ext_resource type="PackedScene" uid="uid://de3ffaf51nbbs" path="res://scenes/wind_visuals.tscn" id="8_esdj5"]
-[ext_resource type="PackedScene" uid="uid://bunice3vh7vor" path="res://scenes/player.tscn" id="8_im5lg"]
-[ext_resource type="Script" path="res://scripts/rings.gd" id="10_5nlmb"]
-[ext_resource type="PackedScene" uid="uid://dfrw68b7015v4" path="res://scenes/ring.tscn" id="10_koiw3"]
-[ext_resource type="Material" uid="uid://dnlblb8kauymr" path="res://assets/materials/ground_basic.tres" id="10_wpu1f"]
-[ext_resource type="Material" uid="uid://btx55q7yipbi8" path="res://assets/materials/ground_object_basic.tres" id="11_505xn"]
+[ext_resource type="PackedScene" uid="uid://djl3q6ynbkau0" path="res://scenes/clouds.tscn" id="1_x50th"]
+[ext_resource type="CompressedTexture3D" uid="uid://bwvwaoihjy78g" path="res://textures/clouds/cloud_sdf_base.exr" id="2_mb1kb"]
+[ext_resource type="CompressedTexture3D" uid="uid://437feiv1oerc" path="res://textures/clouds/cloud_sdf_detail.exr" id="3_ytjlg"]
+[ext_resource type="CompressedTexture3D" uid="uid://4ncscg8jgec0" path="res://textures/clouds/cloud_volume_a.png" id="4_10mko"]
+[ext_resource type="Script" path="res://scripts/sunlight.gd" id="5_djqad"]
+[ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="6_d78u2"]
+[ext_resource type="PackedScene" uid="uid://bunice3vh7vor" path="res://scenes/player.tscn" id="8_ms7oy"]
+[ext_resource type="Material" uid="uid://c8ijlqow6yghl" path="res://assets/materials/ground.tres" id="8_o8cpq"]
+[ext_resource type="Material" uid="uid://btx55q7yipbi8" path="res://assets/materials/ground_object_basic.tres" id="10_gvpwf"]
+[ext_resource type="Script" path="res://scripts/rings.gd" id="11_wadie"]
+[ext_resource type="PackedScene" uid="uid://dfrw68b7015v4" path="res://scenes/ring.tscn" id="12_nxlfy"]
+
+[sub_resource type="GDScript" id="GDScript_3ogy5"]
+script/source = "extends Label
+
+func _process(_delta):
+	var debug_string : String = \"FPS = \" + str(Engine.get_frames_per_second()) + \"\\n\"
+	set_text(debug_string)
+"
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_7bm1i"]
-gradient = ExtResource("5_3hakk")
+gradient = ExtResource("6_d78u2")
 width = 256
 height = 10
 
@@ -47,19 +53,17 @@ size = Vector3(300, 300, 300)
 
 [node name="main" type="Node"]
 
-[node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light", "camera") instance=ExtResource("2_38qtq")]
+[node name="clouds" parent="." node_paths=PackedStringArray("world_environment", "directional_light") instance=ExtResource("1_x50th")]
 world_environment = NodePath("../WorldEnvironment")
 directional_light = NodePath("../sunlight")
-camera = NodePath("../Camera3D")
-cloud_base_texture = ExtResource("3_xqfxp")
-cloud_detail_texture = ExtResource("4_6liwh")
-cloud_volume_texture = ExtResource("5_1gko6")
+cloud_base_texture = ExtResource("2_mb1kb")
+cloud_detail_texture = ExtResource("3_ytjlg")
+cloud_volume_texture = ExtResource("4_10mko")
 wind_vector = Vector2(10, -10)
 wind_uplift = 3.0
 cloud_base_height = 1200.0
 
-[node name="debug" type="Label" parent="."]
-visible = false
+[node name="debug FPS" type="Label" parent="."]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -70,8 +74,7 @@ offset_bottom = 378.0
 grow_horizontal = 0
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 text = "FPS = 100"
-horizontal_alignment = 2
-script = ExtResource("2_3sqim")
+script = SubResource("GDScript_3ogy5")
 
 [node name="sunlight" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.682387, -0.466591, 0.562709, -0.397852, 0.408724, 0.821376, -0.613239, -0.784371, 0.0932734, 0, 0, 0)
@@ -81,17 +84,14 @@ light_energy = 0.3
 light_angular_distance = 1.0
 shadow_enabled = true
 directional_shadow_blend_splits = true
-script = ExtResource("4_uk33e")
+directional_shadow_max_distance = 500.0
+script = ExtResource("5_djqad")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_288wc")
 camera_attributes = SubResource("CameraAttributesPractical_vf470")
 
-[node name="wind_visuals" parent="." instance=ExtResource("8_esdj5")]
-visible = false
-player_path = "../player"
-
-[node name="player" parent="." instance=ExtResource("8_im5lg")]
+[node name="player" parent="." instance=ExtResource("8_ms7oy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
 [node name="map" type="Node3D" parent="."]
@@ -99,153 +99,150 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 
 [node name="ground" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-material_override = ExtResource("10_wpu1f")
+material_override = ExtResource("8_o8cpq")
 use_collision = true
 size = Vector3(10000, 1, 10000)
 
 [node name="road" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8221, 0.157098, 50)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(20, 1, 10000)
 
 [node name="house1" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 4.56997, 50)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house2" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.1082, 4.56997, 23)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house3" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 1)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house4" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, -19)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house5" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, 667.962)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house6" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5098, 4.56997, 715.775)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="house7" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 692.775)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(10, 10, 10)
 
 [node name="tower1" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 41.5533, 569)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(50, 100, 50)
 
 [node name="tower2" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 845.572)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(50, 200, 50)
 
 [node name="tower4" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 936.221)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(75, 150, 75)
 
 [node name="tower3" type="CSGBox3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6525, 113.053, 953.26)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(50, 250, 50)
 
 [node name="mountain1" type="CSGMesh3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1110.74, 113.053, 203.36)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 mesh = SubResource("PrismMesh_mi0gm")
 
 [node name="mountain2" type="CSGMesh3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 618.744, 113.053, 203.36)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 mesh = SubResource("PrismMesh_mi0gm")
 
 [node name="bridge" type="CSGBox3D" parent="map"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 863.21, 174.712, 261.046)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 size = Vector3(50, 450, 100)
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="map"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 523.072, 38, 1134)
-material_override = ExtResource("11_505xn")
+material_override = ExtResource("10_gvpwf")
 use_collision = true
 radius = 50.0
 height = 100.0
 sides = 50
 
-[node name="rings" type="Node3D" parent="."]
-script = ExtResource("10_5nlmb")
+[node name="rings_for_movement_testing" type="Node3D" parent="."]
+script = ExtResource("11_wadie")
 
-[node name="ring1" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring1" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 70, 214)
 
-[node name="ring2" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring2" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 82, 120, 407)
 visible = false
 
-[node name="ring3" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring3" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40.0845, 270, 920.37)
 visible = false
 
-[node name="ring4" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring4" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-0.0201049, 0, 0.999798, 0, 1, 0, -0.999798, 0, -0.0201049, -38.0845, 191.909, 1214.09)
 visible = false
 
-[node name="ring5" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring5" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-0.51731, 0, 0.855798, 0, 1, 0, -0.855798, 0, -0.51731, 37.9155, 191.909, 1572.09)
 visible = false
 
-[node name="ring6" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring6" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 453.73, 183.909, 1693.11)
 visible = false
 
-[node name="ring7" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring7" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 744.085, 172.909, 1398.95)
 visible = false
 
-[node name="ring8" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring8" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 795.107, 107.909, 861.781)
 visible = false
 
-[node name="ring9" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring9" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 845.265, 78.9393, 299.781)
 visible = false
 
-[node name="ring10" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring10" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(-0.525472, 0, 0.850811, 0, 1, 0, -0.850811, 0, -0.525472, 845.265, 89.9393, -183.88)
 visible = false
 
-[node name="ring11" parent="rings" instance=ExtResource("10_koiw3")]
+[node name="ring11" parent="rings_for_movement_testing" instance=ExtResource("12_nxlfy")]
 transform = Transform3D(0.474088, 0, 0.880477, 0, 1, 0, -0.880477, 0, 0.474088, 321.332, 97.9393, -183.88)
-visible = false
-
-[node name="Camera3D" type="Camera3D" parent="."]
 visible = false

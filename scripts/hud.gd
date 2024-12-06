@@ -7,7 +7,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	update_controls_visibility()
 
-func _input(event):
+func _input(_event):
 	if Input.is_action_just_pressed("toggle_controls"):
 		controls_hidden_status = not controls_hidden_status
 		update_controls_visibility()

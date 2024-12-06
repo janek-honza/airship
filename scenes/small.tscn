@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://laqwagx0mdl2"]
+
+[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/small.blend" id="1_l6cx8"]
+
+[node name="floater" instance=ExtResource("1_l6cx8")]

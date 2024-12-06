@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://gjrrngysyos8"
-path="res://.godot/imported/floater.blend-22fccde965fa7ec7c40f3d04a920a722.scn"
+path="res://.godot/imported/small.blend-aec4f881ddaf0421fe39bb93be23604a.scn"
 
 [deps]
 
-source_file="res://assets/3d models/floater.blend"
-dest_files=["res://.godot/imported/floater.blend-22fccde965fa7ec7c40f3d04a920a722.scn"]
+source_file="res://assets/3d models/small.blend"
+dest_files=["res://.godot/imported/small.blend-aec4f881ddaf0421fe39bb93be23604a.scn"]
 
 [params]
 

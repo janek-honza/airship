@@ -5,7 +5,6 @@ extends Node
 @export_subgroup("Dependencies")
 @export var world_environment : WorldEnvironment
 @export var directional_light : DirectionalLight3D
-@export var camera : Camera3D
 
 @export_subgroup("Textures")
 @export var cloud_base_texture : Texture3D:
@@ -215,14 +214,7 @@ func _ready():
 	update_cloud_shader()
 	update_cloud_textures()
 
-func update_cloud_positions():
-	if !camera:
-		printerr("Error! Clouds need to be linked to a Camera3D node")
-	else:
-		$clouds.transform.origin = camera.transform.origin
-
 @warning_ignore("unused_parameter")
 func _process(delta):
-	update_cloud_positions()
 	update_directional_light()
 	update_world_environment()

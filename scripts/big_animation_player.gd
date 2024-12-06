@@ -1,7 +1,7 @@
 extends AnimationPlayer
 
 func _ready():
-	get_node("/root/main/player").throttle_both_engines.connect(animate_propellers)
+	pass
 	
 
 func animate_propellers(throttle):

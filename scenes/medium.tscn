@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp24j2wnbsb07"]
+
+[ext_resource type="PackedScene" uid="uid://d1uljee4n3lhf" path="res://assets/3d models/medium.blend" id="1_qqykw"]
+
+[node name="medium" instance=ExtResource("1_qqykw")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
