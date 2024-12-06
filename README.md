@@ -1,4 +1,5 @@
 # airship
+## This branch contains first version of flight system, which probably won't be further developed.
 
 Demo of a flight model for airships/zeppelins/blimps etc.
 Beginning of a bigger project which will use this flight model.
