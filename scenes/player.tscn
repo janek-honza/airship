@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bunice3vh7vor"]
+[gd_scene load_steps=16 format=3 uid="uid://bunice3vh7vor"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_pxgg3"]
 [ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/small.blend" id="2_m2vom"]
@@ -9,9 +9,12 @@
 [ext_resource type="Shader" path="res://scripts/wind_particles.gdshader" id="5_tqky0"]
 [ext_resource type="Script" path="res://scripts/wind_particles.gd" id="6_wm2yc"]
 [ext_resource type="Script" path="res://scripts/spring_arm_3d.gd" id="7_25b7c"]
+[ext_resource type="Script" path="res://scripts/crosshair2.gd" id="7_o7a2g"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_a4xc2"]
 size = Vector3(37.9727, 41.336, 78.7409)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_mohr5"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x26nc"]
 shader = ExtResource("5_tqky0")
@@ -71,7 +74,7 @@ anchor_left = 1.0
 anchor_top = 0.185
 anchor_right = 1.0
 anchor_bottom = 0.185
-offset_left = -125.0
+offset_left = -281.0
 offset_top = -0.880005
 offset_bottom = 97.12
 text = "Debug:"
@@ -88,22 +91,38 @@ offset_top = -23.0
 grow_horizontal = 0
 grow_vertical = 0
 bbcode_enabled = true
-text = "[b]Show/Hide controls: T[/b]
+text = "[b]Show/Hide controls cheatsheet: T[/b]
 "
 fit_content = true
 
-[node name="XPivot" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13, 0)
+[node name="crosshair2" type="TextureRect" parent="HUD"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("PlaceholderTexture2D_mohr5")
+script = ExtResource("7_o7a2g")
 
-[node name="YPivot" type="Node3D" parent="XPivot"]
+[node name="YPivot" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
 
-[node name="SpringArm3D" type="SpringArm3D" parent="XPivot/YPivot"]
+[node name="XPivot" type="Node3D" parent="YPivot"]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="YPivot/XPivot"]
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 0)
 spring_length = 200.0
 margin = 0.5
 script = ExtResource("7_25b7c")
 
-[node name="Camera3D" type="Camera3D" parent="XPivot/YPivot/SpringArm3D"]
+[node name="Camera3D" type="Camera3D" parent="YPivot/XPivot/SpringArm3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 100)
 far = 20000.0
 

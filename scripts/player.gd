@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
-@onready var Xpivot = $XPivot
-@onready var Ypivot = $XPivot/YPivot
+@onready var Ypivot = $YPivot
+@onready var Xpivot = $YPivot/XPivot
 @onready var HUD = $HUD/Altitude_Throttle_Mass
 @onready var visuals = $visuals
 @onready var Debug = $HUD/Debug
@@ -11,15 +11,15 @@ extends CharacterBody3D
 @export_enum ("small", "medium", "big") var airship_type = "small"
 const AIRSHIP_TYPES = ["small", "medium", "big"] #It would be more optimal to define the list of airship types only one, but I'm not sure how to do it rn, to be fixed in the future
 
-var mass = 0
+var mass = 1
 var throttle = 0
 var left_engine_rpm = 0 #To be used in animation player
 var right_engine_rpm = 0 #To be used in animation player
 
-#Airship specific modifiers
+#Airship specific modifiers, initialized for AIRSHIP_TYPE == small
 var engine_efficiency = 0.25
 var base_mass = 9000
-var max_mass_of_ballonets = 1000
+var lift_modifier = 0.01
 var yaw_speed = 0.01
 var max_roll_in_yaw = 45 #Should be bigger for less stable airships and faster yaw_speed
 var roll_level_speed = 1
@@ -27,31 +27,36 @@ var max_pitch_in_pitch = 60
 var pitch_level_speed = 1
 var spring_length = 100
 var sidewind_modifier = 1 #How much stronger is wind from the side than from the front, changes with sin(degrees)
+var max_altitude = 200
+var max_climb_speed = 5
+var climb_acceleration = 1
+var engine_direction_z = 1 #Define engine angle where 1 = forward, -1 = backward, 0 = has no effect
+var engine_direction_y = 0 #Define engine angle where 1 = up, -1 = down, 0 = has no effect
 
-var fill_percent_ballonets = 40
-var target_fill_percent_ballonets = 40
-
+# Could be airship specific, but for now the same for all
 var throttle_max = 100
 var throttle_min = -50
 
 var pitch_input = 0
 var yaw_input = 0
+var climb_input = 0
 
-var cargo_weight = 100
-var displacment = 0
-var target_engine_speed = 0
+var cargo_weight = 100 #Placeholder, will be used in the future
 var engine_speed = 0
+var target_engine_speed = 0
 var relative_speed_forward = velocity.dot(transform.basis.z)
+var climb_speed = 0
 
 func _ready():
-	pass
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	update_airship_specific_modifiers()
 
-var can_switch = true #to prevent bugs from rapidly switching
+var can_switch = true #to prevent bugs from rapid switching
 
 func _input(event):
 	if event is InputEventMouseMotion:
-		Xpivot.rotate_y(deg_to_rad(-event.relative.x * sensitivity))
-		Ypivot.rotate_x(deg_to_rad(event.relative.y * sensitivity))
+		Ypivot.rotate_y(deg_to_rad(-event.relative.x * sensitivity))
+		Xpivot.rotate_x(deg_to_rad(event.relative.y * sensitivity))
 	
 	if Input.is_action_pressed("throttle_up") and throttle < throttle_max:
 		throttle = min(throttle + 1, 100)
@@ -59,15 +64,15 @@ func _input(event):
 	if Input.is_action_pressed("throttle_down") and throttle > throttle_min:
 		throttle = max(throttle - 1, -50)
 	
-	pitch_input = Input.get_action_strength("pitch_up") - Input.get_action_strength("pitch_down")
+	var alignment_x = Xpivot.global_transform.basis.y.dot(global_transform.basis.z)
+	var smooth_factor_x = 5
+	pitch_input = -clamp(alignment_x * smooth_factor_x, -1, 1)
 	
-	yaw_input = Input.get_action_strength("yaw_left") - Input.get_action_strength("yaw_right")
+	var alignment_y = Ypivot.global_transform.basis.x.dot(global_transform.basis.z)
+	var smooth_factor_y = 5
+	yaw_input = -clamp(alignment_y * smooth_factor_y, -1, 1)
 	
-	if Input.is_action_pressed("inflate_ballonet"):
-		target_fill_percent_ballonets = min(target_fill_percent_ballonets + 1, 100)
-	
-	if Input.is_action_pressed("deflate_ballonet"):
-		target_fill_percent_ballonets = max(target_fill_percent_ballonets - 1, 0)
+	climb_input = Input.get_action_strength("ascend") - Input.get_action_strength("descend")
 	
 	if Input.is_action_pressed("switch_airship_type") and can_switch:
 		cycle_airship_type()
@@ -75,83 +80,114 @@ func _input(event):
 
 	if not Input.is_action_pressed("switch_airship_type"):
 		can_switch = true
+	
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
 
 func _process(_delta):
-	displacment = -self.global_transform.origin.y + 40 + base_mass + max_mass_of_ballonets * 0.5
 	
 	HUD.text = "Altitude: " + str(snapped(self.global_transform.origin.y, 1))+ "\nThrottle: " + str(throttle) + "\nMass: " + str(snapped(mass, 1))
 	
-	Debug.text = "Debug:" + "\n" + str(target_fill_percent_ballonets) + "\n" + str(snapped(fill_percent_ballonets, 0.1)) + "\n" + str(snapped(relative_speed_forward, 1)) + "\n" + str(snapped(engine_speed, 1))
+	Debug.text = "Debug:" + "\nclimb_input = " + str(snapped(climb_input, 0.0001)) + "\nclimb_speed = " + str(snapped(climb_speed, 0.0001)) + "\nrelative_speed_forward = " + str(snapped(relative_speed_forward, 1)) + "\nengine_speed = " + str(snapped(engine_speed, 1))
 
 func _physics_process(delta):
-	var engine_direction = global_transform.basis.z #in other airships engine direction can be changed
-	target_engine_speed = throttle * engine_efficiency
-	relative_speed_forward = velocity.dot(global_transform.basis.z)
-	if engine_speed <= target_engine_speed:
-		engine_speed = min(engine_speed + delta * 10000 / mass, target_engine_speed)
-	else:
-		engine_speed = max(engine_speed - delta * 10000 / mass, target_engine_speed)
+	#Engine direction is recalculated each physics process to match position of the airship
+	#This is likely bad for performance, should be rewritten in the future 
+	var engine_direction = global_transform.basis.z * engine_direction_z + global_transform.basis.y * engine_direction_y
 	
-	if fill_percent_ballonets <= target_fill_percent_ballonets:
-		fill_percent_ballonets = min(fill_percent_ballonets + delta, target_fill_percent_ballonets)
+	target_engine_speed = throttle * engine_efficiency
+	
+	#engine_speed approaching target_engine_speed at 10 * delta
+	if engine_speed <= target_engine_speed:
+		engine_speed = min(engine_speed + 10 * delta, target_engine_speed)
 	else:
-		fill_percent_ballonets = max(fill_percent_ballonets - delta, target_fill_percent_ballonets)
-	mass = base_mass + cargo_weight + max_mass_of_ballonets * fill_percent_ballonets/100
+		engine_speed = max(engine_speed - 10 * delta, target_engine_speed)
+	
+	relative_speed_forward = velocity.dot(global_transform.basis.z) #Used for calculating lift
+	
+	#Modify climb_speed
+	#The pupose of complicated expression in first if is to allow max_climb_speed in the 'middle' of operating latitudes and gradually lower climb speed at 'edges' of operating latitudes.
+	#Currently it doesn't do it very well, the 'edges' are only the last few meters. It should be rewritten in the future.
+	if climb_input > 0:
+		climb_speed = min((climb_speed + delta * climb_acceleration) * pow(self.global_transform.origin.y - max_altitude, 4), max_climb_speed) + relative_speed_forward * lift_modifier
+	if climb_input < 0:
+		climb_speed = -max_climb_speed + relative_speed_forward * lift_modifier
+	if climb_input == 0:
+		climb_speed = 0
+	
+	mass = base_mass + cargo_weight
+	#TODO: Include mass in velocity calculations to simulate inertia (cargo_weight should have bigger impact than base_mass for gameplay reasons)
 	
 	#Sum of 3 components of velocity:
-	# - engines
-	# - displacment/buoyancy
-	# - wind force
+	# 1. engines
+	# 2. climb = lift + buyoancy
+	# 3. wind force (which depends on airship direction to wind using formula sidewind_modifier * sin(wind-airship) + 1, which translates to minimum of 1 for airship parallel to the wind and sidewind_modifier + 1 for airship perpendicular to the wind) 
 	velocity = (engine_direction * engine_speed
-	+ Vector3.UP * (displacment - mass) / 10
-	+ global.wind_direction * (sidewind_modifier*(global.wind_direction.angle_to(global_transform.basis.z)) + 1))
+	+ Vector3.UP * climb_speed
+	+ global.wind_direction * (sidewind_modifier * sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)) 
 	
-	self.rotation.x = lerp(self.rotation.x, -float(pitch_input) * max_pitch_in_pitch/360 * (relative_speed_forward / 10), pitch_level_speed * delta)
+	#Rotation on x axis (pitch)
+	self.rotation.x = lerp(self.rotation.x, -float(pitch_input) * max_pitch_in_pitch/360, pitch_level_speed * delta)
 	
-	#While rotating on y axis (yaw) there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw  
-	self.rotation.y = self.rotation.y + yaw_input * yaw_speed * (5 / (abs(relative_speed_forward)+5))
+	#Rotation on y axis (yaw), during yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw  
+	self.rotation.y = self.rotation.y + yaw_input * yaw_speed
 	visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw_input) * max_roll_in_yaw/360, roll_level_speed * delta)
 	
 	move_and_slide()
 
-func adjust_airship_specific_modifiers():
+func update_airship_specific_modifiers():
 	if airship_type == 'small':
-		engine_efficiency = 0.25
+		engine_efficiency = 0.35
 		base_mass = 9000
-		max_mass_of_ballonets = 1000
+		lift_modifier = 0.01
 		yaw_speed = 0.01
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
 		max_pitch_in_pitch = 60
 		pitch_level_speed = 1
 		sidewind_modifier = 1
+		max_altitude = 100
+		max_climb_speed = 5
+		climb_acceleration = 1
+		engine_direction_z = 1
+		engine_direction_y = 0
 	
 	if airship_type == 'medium':
 		engine_efficiency = 0.75
 		base_mass = 20000
-		max_mass_of_ballonets = 2000
+		lift_modifier = 0.02
 		yaw_speed = 0.01
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
 		max_pitch_in_pitch = 60
 		pitch_level_speed = 1
 		sidewind_modifier = 2
+		max_altitude = 2000
+		max_climb_speed = 6
+		climb_acceleration = 2
+		engine_direction_z = 1
+		engine_direction_y = 0
 	
 	if airship_type == 'big':
 		engine_efficiency = 1.25
 		base_mass = 45000
-		max_mass_of_ballonets = 5000
-		yaw_speed = 0.01
+		lift_modifier = 0.01
+		yaw_speed = 0.005
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
 		max_pitch_in_pitch = 60
 		pitch_level_speed = 1
 		sidewind_modifier = 3
+		max_altitude = 2500
+		max_climb_speed = 8
+		climb_acceleration = 0.75
+		engine_direction_z = 1
+		engine_direction_y = 0
 
 func cycle_airship_type():
 		var current_index = AIRSHIP_TYPES.find(airship_type)
 		# Calculate the next index, cycling back to 0 if past max
 		var next_index = (current_index + 1) % AIRSHIP_TYPES.size()
 		airship_type = AIRSHIP_TYPES[next_index]
-		adjust_airship_specific_modifiers()
+		update_airship_specific_modifiers()
 		print("Airship type switched to: ", airship_type)
