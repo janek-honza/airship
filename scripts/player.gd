@@ -24,7 +24,7 @@ var yaw_speed = 0.01
 var max_roll_in_yaw = 45 #Should be bigger for less stable airships and faster yaw_speed
 var roll_level_speed = 1
 var max_pitch_in_pitch = 60
-var pitch_level_speed = 1
+var pitch_speed = 1
 var spring_length = 100
 var sidewind_modifier = 1 #How much stronger is wind from the side than from the front, changes with sin(degrees)
 var max_altitude = 200
@@ -37,8 +37,6 @@ var engine_direction_y = 0 #Define engine angle where 1 = up, -1 = down, 0 = has
 var throttle_max = 100
 var throttle_min = -50
 
-var pitch_input = 0
-var yaw_input = 0
 var climb_input = 0
 
 var cargo_weight = 100 #Placeholder, will be used in the future
@@ -64,14 +62,6 @@ func _input(event):
 	if Input.is_action_pressed("throttle_down") and throttle > throttle_min:
 		throttle = max(throttle - 1, -50)
 	
-	var alignment_x = Xpivot.global_transform.basis.y.dot(global_transform.basis.z)
-	var smooth_factor_x = 5
-	pitch_input = -clamp(alignment_x * smooth_factor_x, -1, 1)
-	
-	var alignment_y = Ypivot.global_transform.basis.x.dot(global_transform.basis.z)
-	var smooth_factor_y = 5
-	yaw_input = -clamp(alignment_y * smooth_factor_y, -1, 1)
-	
 	climb_input = Input.get_action_strength("ascend") - Input.get_action_strength("descend")
 	
 	if Input.is_action_pressed("switch_airship_type") and can_switch:
@@ -84,7 +74,7 @@ func _input(event):
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 
-func _process(_delta):
+func _process(delta):
 	
 	HUD.text = "Altitude: " + str(snapped(self.global_transform.origin.y, 1))+ "\nThrottle: " + str(throttle) + "\nMass: " + str(snapped(mass, 1))
 	
@@ -106,10 +96,10 @@ func _physics_process(delta):
 	relative_speed_forward = velocity.dot(global_transform.basis.z) #Used for calculating lift
 	
 	#Modify climb_speed
-	#The pupose of complicated expression in first if is to allow max_climb_speed in the 'middle' of operating latitudes and gradually lower climb speed at 'edges' of operating latitudes.
-	#Currently it doesn't do it very well, the 'edges' are only the last few meters. It should be rewritten in the future.
+	#The pupose of complicated expression in first if is to allow max_climb_speed in the 'middle' of operating latitudes and gradually lower climb speed near the limit of altitude and altitude = 0.
+	#It is achieved using quadratic equation
 	if climb_input > 0:
-		climb_speed = min((climb_speed + delta * climb_acceleration) * pow(self.global_transform.origin.y - max_altitude, 4), max_climb_speed) + relative_speed_forward * lift_modifier
+		climb_speed = min(0.01 * self.global_transform.origin.y * (max_altitude - self.global_transform.origin.y), max_climb_speed) + relative_speed_forward * lift_modifier
 	if climb_input < 0:
 		climb_speed = -max_climb_speed + relative_speed_forward * lift_modifier
 	if climb_input == 0:
@@ -127,26 +117,51 @@ func _physics_process(delta):
 	+ global.wind_direction * (sidewind_modifier * sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)) 
 	
 	#Rotation on x axis (pitch)
-	self.rotation.x = lerp(self.rotation.x, -float(pitch_input) * max_pitch_in_pitch/360, pitch_level_speed * delta)
+	var pitch = lerp(self.rotation.x, Xpivot.rotation.x, pitch_speed) * delta
+	#Rotates camera and player at the same rate in the opposite directions
+	self.rotation.x = clampf(self.rotation.x + pitch, -max_pitch_in_pitch, max_pitch_in_pitch)
+	Xpivot.rotation.x -= pitch
 	
-	#Rotation on y axis (yaw), during yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw  
-	self.rotation.y = self.rotation.y + yaw_input * yaw_speed
-	visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw_input) * max_roll_in_yaw/360, roll_level_speed * delta)
+	#Rotation on y axis (yaw), 
+	var yaw = lerp(self.rotation.y, Ypivot.rotation.y, yaw_speed) * delta
+	#Rotates camera and player at the same rate in the opposite directions
+	self.rotation.y += yaw
+	Ypivot.rotation.y -= yaw
+	
+	#During yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw
+	visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw) * max_roll_in_yaw, roll_level_speed * delta)
 	
 	move_and_slide()
+
+func alternative(delta):
+	self.rotation.y = wrapf(self.rotation.y, -PI, PI)
+	Ypivot.rotation.y = wrapf(Ypivot.rotation.y, -PI, PI)
+	var pitch = lerpf(self.rotation.x, Xpivot.rotation.x, pitch_speed) * delta
+	
+	self.rotation.x = clampf(self.rotation.x + pitch, -PI/8, PI/8)
+	Xpivot.rotation.x -= pitch
+	
+	var target_yaw = Ypivot.rotation.y
+	var current_yaw = self.rotation.y
+	var yaw_diff = wrapf(target_yaw - current_yaw, -PI, PI)
+	var yaw = yaw_diff * yaw_speed * delta
+	
+	self.rotation.y += yaw
+	Ypivot.rotation.y -= yaw
+
 
 func update_airship_specific_modifiers():
 	if airship_type == 'small':
 		engine_efficiency = 0.35
 		base_mass = 9000
 		lift_modifier = 0.01
-		yaw_speed = 0.01
+		yaw_speed = 0.75
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
-		max_pitch_in_pitch = 60
-		pitch_level_speed = 1
+		max_pitch_in_pitch = 0.1
+		pitch_speed = 1
 		sidewind_modifier = 1
-		max_altitude = 100
+		max_altitude = 500
 		max_climb_speed = 5
 		climb_acceleration = 1
 		engine_direction_z = 1
@@ -156,11 +171,11 @@ func update_airship_specific_modifiers():
 		engine_efficiency = 0.75
 		base_mass = 20000
 		lift_modifier = 0.02
-		yaw_speed = 0.01
+		yaw_speed = 2
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
 		max_pitch_in_pitch = 60
-		pitch_level_speed = 1
+		pitch_speed = 1
 		sidewind_modifier = 2
 		max_altitude = 2000
 		max_climb_speed = 6
@@ -176,7 +191,7 @@ func update_airship_specific_modifiers():
 		max_roll_in_yaw = 45
 		roll_level_speed = 1
 		max_pitch_in_pitch = 60
-		pitch_level_speed = 1
+		pitch_speed = 1
 		sidewind_modifier = 3
 		max_altitude = 2500
 		max_climb_speed = 8

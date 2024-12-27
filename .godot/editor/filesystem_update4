@@ -1,9 +1,8 @@
-res://scenes/player.tscn
+res://scenes/main.tscn
 res://scripts/wind_particles.gdshader
 res://assets/materials/ground.tres
 res://assets/materials/ground_object_basic.tres
-res://scripts/hud.gd
 res://scripts/player.gd
-res://scenes/main.tscn
-res://scripts/sunlight.gd
-res://scripts/crosshair2.gd
+res://scenes/player.tscn
+res://scenes/main_no_clouds.tscn
+res://scripts/hud.gd

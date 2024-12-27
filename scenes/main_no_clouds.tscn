@@ -1,0 +1,234 @@
+[gd_scene load_steps=15 format=3 uid="uid://bop3xqaupx3c7"]
+
+[ext_resource type="Script" path="res://scripts/sunlight.gd" id="5_cqsn5"]
+[ext_resource type="Gradient" uid="uid://cwiiu5dy83cai" path="res://textures/gradients/color_gradient_a.tres" id="6_x5wm2"]
+[ext_resource type="PackedScene" uid="uid://bunice3vh7vor" path="res://scenes/player.tscn" id="7_2l4e1"]
+[ext_resource type="Material" uid="uid://c8ijlqow6yghl" path="res://assets/materials/ground.tres" id="8_4r7i4"]
+[ext_resource type="Material" uid="uid://btx55q7yipbi8" path="res://assets/materials/ground_object_basic.tres" id="9_25wol"]
+[ext_resource type="Script" path="res://scripts/rings.gd" id="10_3ig1b"]
+[ext_resource type="PackedScene" uid="uid://dfrw68b7015v4" path="res://scenes/ring.tscn" id="11_ug1jj"]
+
+[sub_resource type="GDScript" id="GDScript_3ogy5"]
+script/source = "extends Label
+
+func _process(_delta):
+	var debug_string : String = \"FPS = \" + str(Engine.get_frames_per_second()) + \"\\n\"
+	set_text(debug_string)
+"
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7bm1i"]
+gradient = ExtResource("6_x5wm2")
+width = 256
+height = 10
+
+[sub_resource type="PhysicalSkyMaterial" id="PhysicalSkyMaterial_c28mf"]
+mie_color = Color(1, 0.811765, 0.552941, 1)
+use_debanding = false
+
+[sub_resource type="Sky" id="Sky_dolyt"]
+sky_material = SubResource("PhysicalSkyMaterial_c28mf")
+
+[sub_resource type="Environment" id="Environment_288wc"]
+background_mode = 2
+sky = SubResource("Sky_dolyt")
+tonemap_mode = 3
+ssao_enabled = true
+ssil_enabled = true
+volumetric_fog_anisotropy = 0.9
+volumetric_fog_length = 256.0
+volumetric_fog_ambient_inject = 10.0
+adjustment_saturation = 0.3
+adjustment_color_correction = SubResource("GradientTexture2D_7bm1i")
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_vf470"]
+auto_exposure_enabled = true
+auto_exposure_scale = 0.3
+
+[sub_resource type="PrismMesh" id="PrismMesh_mi0gm"]
+size = Vector3(300, 300, 300)
+
+[node name="main" type="Node"]
+
+[node name="debug FPS" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -225.0
+offset_top = 11.0
+offset_right = -14.0
+offset_bottom = 378.0
+grow_horizontal = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+text = "FPS = 100"
+script = SubResource("GDScript_3ogy5")
+
+[node name="sunlight" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.682387, -0.466591, 0.562709, -0.397852, 0.408724, 0.821376, -0.613239, -0.784371, 0.0932734, 0, 0, 0)
+rotation_edit_mode = 2
+light_color = Color(1, 0.811765, 0.552941, 1)
+light_energy = 0.3
+light_angular_distance = 1.0
+shadow_enabled = true
+directional_shadow_blend_splits = true
+directional_shadow_max_distance = 500.0
+script = ExtResource("5_cqsn5")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_288wc")
+camera_attributes = SubResource("CameraAttributesPractical_vf470")
+
+[node name="player" parent="." instance=ExtResource("7_2l4e1")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+
+[node name="map" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+
+[node name="ground" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+material_override = ExtResource("8_4r7i4")
+use_collision = true
+size = Vector3(10000, 1, 10000)
+
+[node name="road" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.8221, 0.157098, 50)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(20, 1, 10000)
+
+[node name="house1" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 17, 4.56997, 50)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house2" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.1082, 4.56997, 23)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house3" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 1)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house4" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, -19)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house5" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.1082, 4.96997, 667.962)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house6" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.5098, 4.56997, 715.775)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="house7" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.1082, 4.56997, 692.775)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(10, 10, 10)
+
+[node name="tower1" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -57, 41.5533, 569)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(50, 100, 50)
+
+[node name="tower2" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 845.572)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(50, 200, 50)
+
+[node name="tower4" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -69, 89.6074, 936.221)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(75, 150, 75)
+
+[node name="tower3" type="CSGBox3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 47.6525, 113.053, 953.26)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(50, 250, 50)
+
+[node name="mountain1" type="CSGMesh3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1110.74, 113.053, 203.36)
+material_override = ExtResource("9_25wol")
+use_collision = true
+mesh = SubResource("PrismMesh_mi0gm")
+
+[node name="mountain2" type="CSGMesh3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 618.744, 113.053, 203.36)
+material_override = ExtResource("9_25wol")
+use_collision = true
+mesh = SubResource("PrismMesh_mi0gm")
+
+[node name="bridge" type="CSGBox3D" parent="map"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 863.21, 174.712, 261.046)
+material_override = ExtResource("9_25wol")
+use_collision = true
+size = Vector3(50, 450, 100)
+
+[node name="CSGCylinder3D" type="CSGCylinder3D" parent="map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 523.072, 38, 1134)
+material_override = ExtResource("9_25wol")
+use_collision = true
+radius = 50.0
+height = 100.0
+sides = 50
+
+[node name="rings_for_movement_testing" type="Node3D" parent="."]
+script = ExtResource("10_3ig1b")
+
+[node name="ring1" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 70, 214)
+
+[node name="ring2" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 82, 120, 407)
+visible = false
+
+[node name="ring3" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -40.0845, 270, 920.37)
+visible = false
+
+[node name="ring4" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-0.0201049, 0, 0.999798, 0, 1, 0, -0.999798, 0, -0.0201049, -38.0845, 191.909, 1214.09)
+visible = false
+
+[node name="ring5" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-0.51731, 0, 0.855798, 0, 1, 0, -0.855798, 0, -0.51731, 37.9155, 191.909, 1572.09)
+visible = false
+
+[node name="ring6" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 453.73, 183.909, 1693.11)
+visible = false
+
+[node name="ring7" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 744.085, 172.909, 1398.95)
+visible = false
+
+[node name="ring8" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 795.107, 107.909, 861.781)
+visible = false
+
+[node name="ring9" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 845.265, 78.9393, 299.781)
+visible = false
+
+[node name="ring10" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(-0.525472, 0, 0.850811, 0, 1, 0, -0.850811, 0, -0.525472, 845.265, 89.9393, -183.88)
+visible = false
+
+[node name="ring11" parent="rings_for_movement_testing" instance=ExtResource("11_ug1jj")]
+transform = Transform3D(0.474088, 0, 0.880477, 0, 1, 0, -0.880477, 0, 0.474088, 321.332, 97.9393, -183.88)
+visible = false
