@@ -6,3 +6,6 @@ res://scripts/player.gd
 res://scenes/player.tscn
 res://scenes/main_no_clouds.tscn
 res://scripts/hud.gd
+res://scripts/camera_pivot.gd
+res://scripts/spring_arm_3d.gd
+res://scripts/player_visuals.gd

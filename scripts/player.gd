@@ -9,41 +9,40 @@ extends CharacterBody3D
 @export var sensitivity = 0.1
 
 @export_enum ("small", "medium", "big") var airship_type = "small"
-const AIRSHIP_TYPES = ["small", "medium", "big"] #It would be more optimal to define the list of airship types only one, but I'm not sure how to do it rn, to be fixed in the future
+const AIRSHIP_TYPES = ["small", "medium", "big"] #The same list is mirrored in camera_pivot and player_visuals scripts.
+#It would be more optimal to define the list of airship types only once, but I'm not sure how to do it rn, to be fixed in the future
 
-var mass = 1
-var throttle = 0
-var left_engine_rpm = 0 #To be used in animation player
-var right_engine_rpm = 0 #To be used in animation player
-
-#Airship specific modifiers, initialized for AIRSHIP_TYPE == small
-var engine_efficiency = 0.25
+#Airship specific modifiers, initialized for AIRSHIP_TYPE == small, but updated in func ready()
+var engine_efficiency = 0.35
 var base_mass = 9000
 var lift_modifier = 0.01
-var yaw_speed = 0.01
-var max_roll_in_yaw = 45 #Should be bigger for less stable airships and faster yaw_speed
-var roll_level_speed = 1
-var max_pitch_in_pitch = 60
+var yaw_speed = 0.75
+var max_roll_in_yaw = 45 #~half of maximum roll during yaw in degrees. Should be bigger for less stable airships and faster yaw_speed
+var roll_level_speed = 1 #How fast roll returns to level after yaw pushing it out of level
+var max_pitch_in_pitch = 0.5 #maximum pitch in radians
+var min_pitch_in_pitch = -0.5 #minimum pitch in radians
 var pitch_speed = 1
-var spring_length = 100
 var sidewind_modifier = 1 #How much stronger is wind from the side than from the front, changes with sin(degrees)
-var max_altitude = 200
+var max_altitude = 500
 var max_climb_speed = 5
 var climb_acceleration = 1
 var engine_direction_z = 1 #Define engine angle where 1 = forward, -1 = backward, 0 = has no effect
 var engine_direction_y = 0 #Define engine angle where 1 = up, -1 = down, 0 = has no effect
 
-# Could be airship specific, but for now the same for all
+# Could be airship specific in the future, for now the same for all
 var throttle_max = 100
 var throttle_min = -50
 
 var climb_input = 0
-
-var cargo_weight = 100 #Placeholder, will be used in the future
+var cargo_weight = 100 #Placeholder, will be used for inertia simulation in the future
 var engine_speed = 0
 var target_engine_speed = 0
-var relative_speed_forward = velocity.dot(transform.basis.z)
+var relative_speed_forward = velocity.dot(transform.basis.z) #Used for calculating lift
 var climb_speed = 0
+var mass = 0
+var throttle = 0
+var left_engine_rpm = 0 #To be used in animation player
+var right_engine_rpm = 0 #To be used in animation player
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -57,10 +56,10 @@ func _input(event):
 		Xpivot.rotate_x(deg_to_rad(event.relative.y * sensitivity))
 	
 	if Input.is_action_pressed("throttle_up") and throttle < throttle_max:
-		throttle = min(throttle + 1, 100)
+		throttle = min(throttle + 1, throttle_max)
 	
 	if Input.is_action_pressed("throttle_down") and throttle > throttle_min:
-		throttle = max(throttle - 1, -50)
+		throttle = max(throttle - 1, throttle_min)
 	
 	climb_input = Input.get_action_strength("ascend") - Input.get_action_strength("descend")
 	
@@ -69,19 +68,18 @@ func _input(event):
 		can_switch = false
 
 	if not Input.is_action_pressed("switch_airship_type"):
-		can_switch = true
+		can_switch = true #Reset to allow the next switching
 	
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 
 func _process(delta):
-	
 	HUD.text = "Altitude: " + str(snapped(self.global_transform.origin.y, 1))+ "\nThrottle: " + str(throttle) + "\nMass: " + str(snapped(mass, 1))
 	
 	Debug.text = "Debug:" + "\nclimb_input = " + str(snapped(climb_input, 0.0001)) + "\nclimb_speed = " + str(snapped(climb_speed, 0.0001)) + "\nrelative_speed_forward = " + str(snapped(relative_speed_forward, 1)) + "\nengine_speed = " + str(snapped(engine_speed, 1))
 
 func _physics_process(delta):
-	#Engine direction is recalculated each physics process to match position of the airship
+	#engine_direction and relative_speed_forward are recalculated each physics process to match position of the airship
 	#This is likely bad for performance, should be rewritten in the future 
 	var engine_direction = global_transform.basis.z * engine_direction_z + global_transform.basis.y * engine_direction_y
 	
@@ -93,11 +91,11 @@ func _physics_process(delta):
 	else:
 		engine_speed = max(engine_speed - 10 * delta, target_engine_speed)
 	
-	relative_speed_forward = velocity.dot(global_transform.basis.z) #Used for calculating lift
+	relative_speed_forward = velocity.dot(global_transform.basis.z)
 	
 	#Modify climb_speed
 	#The pupose of complicated expression in first if is to allow max_climb_speed in the 'middle' of operating latitudes and gradually lower climb speed near the limit of altitude and altitude = 0.
-	#It is achieved using quadratic equation
+	#It is achieved using quadratic equation and min
 	if climb_input > 0:
 		climb_speed = min(0.01 * self.global_transform.origin.y * (max_altitude - self.global_transform.origin.y), max_climb_speed) + relative_speed_forward * lift_modifier
 	if climb_input < 0:
@@ -117,87 +115,92 @@ func _physics_process(delta):
 	+ global.wind_direction * (sidewind_modifier * sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)) 
 	
 	#Rotation on x axis (pitch)
-	var pitch = lerp(self.rotation.x, Xpivot.rotation.x, pitch_speed) * delta
-	#Rotates camera and player at the same rate in the opposite directions
-	self.rotation.x = clampf(self.rotation.x + pitch, -max_pitch_in_pitch, max_pitch_in_pitch)
-	Xpivot.rotation.x -= pitch
+	var pitch_angle_diffrence = Xpivot.global_rotation.x - self.global_rotation.x
+	pitch_angle_diffrence = wrapf(pitch_angle_diffrence, -PI, PI)
+	var pitch = pitch_angle_diffrence * pitch_speed * delta
 	
-	#Rotation on y axis (yaw), 
-	var yaw = lerp(self.rotation.y, Ypivot.rotation.y, yaw_speed) * delta
 	#Rotates camera and player at the same rate in the opposite directions
-	self.rotation.y += yaw
+	#Player rotation has airship specific limits: min_pitch_in_pitch & max_pitch_in_pitch
+	#Local rotation is used for the camera (instead of global rotation) to prevent camera tilting
+	self.global_rotation.x = clampf(self.global_rotation.x + pitch, min_pitch_in_pitch, max_pitch_in_pitch)
+	self.global_rotation.x = wrapf(self.global_rotation.x, -PI, PI)
+	Xpivot.rotation.x -= pitch
+	Xpivot.rotation.x = wrapf(Xpivot.rotation.x, -PI, PI)
+	
+	#Rotation on y axis (yaw)
+	var yaw_angle_difference = Ypivot.global_rotation.y - self.global_rotation.y
+	yaw_angle_difference = wrapf(yaw_angle_difference, -PI, PI)
+	var yaw = yaw_angle_difference * yaw_speed * delta
+	
+	#Rotates camera and player at the same rate in the opposite directions
+	#Local rotation is used for the camera (instead of global rotation) to prevent camera tilting
+	self.global_rotation.y += yaw
+	self.global_rotation.y = wrapf(self.global_rotation.y, -PI, PI)
+	
 	Ypivot.rotation.y -= yaw
+	Ypivot.rotation.y = wrapf(Ypivot.rotation.y, -PI, PI)
 	
 	#During yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw
 	visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw) * max_roll_in_yaw, roll_level_speed * delta)
 	
 	move_and_slide()
 
-func alternative(delta):
-	self.rotation.y = wrapf(self.rotation.y, -PI, PI)
-	Ypivot.rotation.y = wrapf(Ypivot.rotation.y, -PI, PI)
-	var pitch = lerpf(self.rotation.x, Xpivot.rotation.x, pitch_speed) * delta
-	
-	self.rotation.x = clampf(self.rotation.x + pitch, -PI/8, PI/8)
-	Xpivot.rotation.x -= pitch
-	
-	var target_yaw = Ypivot.rotation.y
-	var current_yaw = self.rotation.y
-	var yaw_diff = wrapf(target_yaw - current_yaw, -PI, PI)
-	var yaw = yaw_diff * yaw_speed * delta
-	
-	self.rotation.y += yaw
-	Ypivot.rotation.y -= yaw
-
 
 func update_airship_specific_modifiers():
-	if airship_type == 'small':
-		engine_efficiency = 0.35
-		base_mass = 9000
-		lift_modifier = 0.01
-		yaw_speed = 0.75
-		max_roll_in_yaw = 45
-		roll_level_speed = 1
-		max_pitch_in_pitch = 0.1
-		pitch_speed = 1
-		sidewind_modifier = 1
-		max_altitude = 500
-		max_climb_speed = 5
-		climb_acceleration = 1
-		engine_direction_z = 1
-		engine_direction_y = 0
+	match airship_type:
+		'small':
+			engine_efficiency = 0.35
+			base_mass = 9000
+			lift_modifier = 0.01
+			yaw_speed = 0.75
+			max_roll_in_yaw = 45
+			roll_level_speed = 1
+			max_pitch_in_pitch = 0.5
+			min_pitch_in_pitch = -0.5
+			pitch_speed = 1
+			sidewind_modifier = 1
+			max_altitude = 500
+			max_climb_speed = 5
+			climb_acceleration = 1
+			engine_direction_z = 1
+			engine_direction_y = 0
 	
-	if airship_type == 'medium':
-		engine_efficiency = 0.75
-		base_mass = 20000
-		lift_modifier = 0.02
-		yaw_speed = 2
-		max_roll_in_yaw = 45
-		roll_level_speed = 1
-		max_pitch_in_pitch = 60
-		pitch_speed = 1
-		sidewind_modifier = 2
-		max_altitude = 2000
-		max_climb_speed = 6
-		climb_acceleration = 2
-		engine_direction_z = 1
-		engine_direction_y = 0
-	
-	if airship_type == 'big':
-		engine_efficiency = 1.25
-		base_mass = 45000
-		lift_modifier = 0.01
-		yaw_speed = 0.005
-		max_roll_in_yaw = 45
-		roll_level_speed = 1
-		max_pitch_in_pitch = 60
-		pitch_speed = 1
-		sidewind_modifier = 3
-		max_altitude = 2500
-		max_climb_speed = 8
-		climb_acceleration = 0.75
-		engine_direction_z = 1
-		engine_direction_y = 0
+		'medium': #Hasn't been testes after changing flight system, needs to be tested and possibly adjusted
+			engine_efficiency = 0.75
+			base_mass = 20000
+			lift_modifier = 0.02
+			yaw_speed = 2
+			max_roll_in_yaw = 45
+			roll_level_speed = 1
+			max_pitch_in_pitch = 0.75
+			min_pitch_in_pitch = -0.5
+			pitch_speed = 1
+			sidewind_modifier = 2
+			max_altitude = 2000
+			max_climb_speed = 6
+			climb_acceleration = 2
+			engine_direction_z = 1
+			engine_direction_y = 0
+		
+		'big': #Hasn't been testes after changing flight system, needs to be tested and possibly adjusted
+			engine_efficiency = 1.25
+			base_mass = 45000
+			lift_modifier = 0.01
+			yaw_speed = 0.005
+			max_roll_in_yaw = 45
+			roll_level_speed = 1
+			max_pitch_in_pitch = 0.45
+			min_pitch_in_pitch = -0.45
+			pitch_speed = 1
+			sidewind_modifier = 3
+			max_altitude = 2500
+			max_climb_speed = 8
+			climb_acceleration = 0.75
+			engine_direction_z = 1
+			engine_direction_y = 0
+		
+		_:
+			print("\nERROR: Airship type ", airship_type, "not implemented in player.gd")
 
 func cycle_airship_type():
 		var current_index = AIRSHIP_TYPES.find(airship_type)

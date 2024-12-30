@@ -1,23 +1,33 @@
 extends Node3D
+@onready var player = $".."
+
+var current_airship_type = 'small'
 
 func _process(_delta):
-	if Input.is_action_pressed("switch_airship_type"):
-		update_visuals()
-
+	if player:
+		# Check if the airship type has changed
+		if current_airship_type != player.airship_type:
+			current_airship_type = player.airship_type
+			update_visuals()
+	else:
+		push_error("Player node or 'airship_type' variable not found!")
 
 func update_visuals():
-	var player = get_parent()
-	if player.airship_type == 'small':
-		$small.visible = true
-		$medium.visible = false
-		$big.visible = false
-	
-	if player.airship_type == 'medium':
-		$small.visible = false
-		$medium.visible = true
-		$big.visible = false
-	
-	if player.airship_type == 'big':
-		$small.visible = false
-		$medium.visible = false
-		$big.visible = true
+	match player.airship_type:
+		'small':
+			$small.visible = true
+			$medium.visible = false
+			$big.visible = false
+		
+		'medium':
+			$small.visible = false
+			$medium.visible = true
+			$big.visible = false
+		
+		'big':
+			$small.visible = false
+			$medium.visible = false
+			$big.visible = true
+		
+		_:
+			print("\nERROR: Airship type ", player.airship_type, "not implemented in player_visuals.gd")

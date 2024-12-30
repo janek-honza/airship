@@ -6,7 +6,7 @@ extends CanvasLayer
 @onready var Ypivot = $"../YPivot"
 @onready var Xpivot = $"../YPivot/XPivot"
 @onready var visuals = $"../visuals"
-@onready var indicator = $indicator
+@onready var indicator = $CenterContainer/indicator
 
 func _input(_event):
 	if Input.is_action_just_pressed("toggle_controls"):
@@ -35,7 +35,7 @@ func _process(_delta):
 	var screen_height = get_viewport().size.y
 	var screen_width = get_viewport().size.x
 	
-	indicator.position.y = (screen_height - 50) / 2 + (Xpivot.rotation.x * screen_height / PI)
-	indicator.position.x = (screen_width - 200) / 2 + (Ypivot.rotation.y * screen_width / PI)
+	indicator.position.y = -Xpivot.rotation.x * screen_height / PI
+	indicator.position.x = Ypivot.rotation.y * screen_width / PI
 	
 	indicator.rotation = visuals.rotation.z
