@@ -16,7 +16,7 @@ func _process(delta):
 			current_airship_type = player.airship_type
 			update_airship_specific_modifiers(current_airship_type)
 	else:
-		push_error("Player node or 'airship_type' variable not found!")
+		printerr("Player node or 'airship_type' variable not found!")
 
 func update_airship_specific_modifiers(current_airship_type):
 	match current_airship_type:
@@ -33,9 +33,17 @@ func update_airship_specific_modifiers(current_airship_type):
 			aiming_offset = 100.0
 		
 		_:
-			print("\nERROR: Airship type ", current_airship_type, "not implemented in camera_pivot.gd")
+			printerr("Airship type '", current_airship_type, "' not implemented in camera_pivot.gd")
 
 func _physics_process(delta):
 	#Adjust spring arm length to target length
 	if abs(spring_arm.spring_length - target_spring_length) > 0.01:  # Avoids minor jitter/twitching
 		spring_arm.spring_length = lerp(spring_arm.spring_length, target_spring_length, delta)
+	
+	var offset_modifier = -1 #Changes aiming offset from right to left to always give good visibility of the target
+	
+	if Input.is_action_pressed("aiming"):
+		if (self.position.x - offset_modifier * aiming_offset) > 0.01:
+			self.position.x = lerp(self.position.x, -aiming_offset, delta*5)
+	else:
+		self.position.x = lerp(self.position.x, 0.0, delta*5)

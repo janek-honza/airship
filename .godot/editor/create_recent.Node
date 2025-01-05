@@ -1,3 +1,7 @@
+CollisionShape3D
+RayCast3D
+CSGBox3D
+Node3D
 TextureRect
 CenterContainer
 Control
@@ -6,5 +10,4 @@ Camera3D
 CSGCylinder3D
 CSGMesh3D
 GPUParticles3D
-CollisionShape3D
 Area3D

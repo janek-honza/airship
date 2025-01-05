@@ -10,7 +10,7 @@ func _process(_delta):
 			current_airship_type = player.airship_type
 			update_visuals()
 	else:
-		push_error("Player node or 'airship_type' variable not found!")
+		printerr("Player node or 'airship_type' variable not found!")
 
 func update_visuals():
 	match player.airship_type:
@@ -30,4 +30,4 @@ func update_visuals():
 			$big.visible = true
 		
 		_:
-			print("\nERROR: Airship type ", player.airship_type, "not implemented in player_visuals.gd")
+			printerr("Airship type '", player.airship_type, "' not implemented in player_visuals.gd")

@@ -1,5 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://laqwagx0mdl2"]
+[gd_scene load_steps=3 format=3 uid="uid://laqwagx0mdl2"]
 
-[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/small.blend" id="1_l6cx8"]
+[ext_resource type="PackedScene" uid="uid://gjrrngysyos8" path="res://assets/3d models/small.blend" id="1_x5vro"]
+[ext_resource type="Material" uid="uid://cde4r338s6o6p" path="res://assets/materials/airship_moving_parts.tres" id="2_fxf36"]
 
-[node name="floater" instance=ExtResource("1_l6cx8")]
+[node name="small" instance=ExtResource("1_x5vro")]
+
+[node name="weapon_slot_1" type="Node3D" parent="." index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 10)
+
+[node name="machine_gun" type="CSGBox3D" parent="weapon_slot_1" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+size = Vector3(1, 1, 5)
+material = ExtResource("2_fxf36")

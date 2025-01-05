@@ -200,7 +200,7 @@ func update_airship_specific_modifiers():
 			engine_direction_y = 0
 		
 		_:
-			print("\nERROR: Airship type ", airship_type, "not implemented in player.gd")
+			printerr("Airship type '", airship_type, "' not implemented in player.gd")
 
 func cycle_airship_type():
 		var current_index = AIRSHIP_TYPES.find(airship_type)
