@@ -1,6 +1,6 @@
 extends CanvasLayer
 
-@export var controls_hidden_status = true  # Changed variable name to follow convention and set default to true
+@export var controls_hidden_status = false
 
 @onready var controls_cheatsheet = $Controls_cheatsheet
 @onready var Ypivot = $"../YPivot"
@@ -22,12 +22,10 @@ func update_controls_visibility():
 Inflate Ballonets (add mass): Ctrl
 Deflate Ballonets (reduce mass): Space
 
-Increase/Decrease Throttle: Scroll wheel
+Increase throttle: W
+Decrease throttle: S
 
-Pitch Up/Down: W/S
-Yaw Left/Right: A/D
-
-Free/Capture Mouse: Middle Mouse Button
+Aiming (free camera): RMB
 
 Quit: Esc"
 

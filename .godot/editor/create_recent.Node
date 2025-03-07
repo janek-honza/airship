@@ -1,9 +1,11 @@
+CSGCylinder3D
+CSGBox3D
+Node3D
 TextureRect
 CenterContainer
 Control
 Node2D
 Camera3D
-CSGCylinder3D
 CSGMesh3D
 GPUParticles3D
 CollisionShape3D

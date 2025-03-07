@@ -8,8 +8,9 @@ extends CharacterBody3D
 
 @export var sensitivity = 0.1
 
-@export_enum ("small", "medium", "big") var airship_type = "small"
-const AIRSHIP_TYPES = ["small", "medium", "big"] #The same list is mirrored in camera_pivot and player_visuals scripts.
+@export_enum ("small", "medium", "big") var airship_type = "big"
+signal airship_type_switched
+const AIRSHIP_TYPES = ["small", "medium", "big"] #The same list is mirrored in camera_pivot, weapon_slots, collision_shape and player_visuals scripts.
 #It would be more optimal to define the list of airship types only once, but I'm not sure how to do it rn, to be fixed in the future
 
 #Airship specific modifiers, initialized for AIRSHIP_TYPE == small, but updated in func ready()
@@ -47,6 +48,7 @@ var right_engine_rpm = 0 #To be used in animation player
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	update_airship_specific_modifiers()
+	emit_signal("airship_type_switched")
 
 var can_switch = true #to prevent bugs from rapid switching
 
@@ -65,6 +67,7 @@ func _input(event):
 	
 	if Input.is_action_pressed("switch_airship_type") and can_switch:
 		cycle_airship_type()
+		emit_signal("airship_type_switched")
 		can_switch = false
 
 	if not Input.is_action_pressed("switch_airship_type"):
@@ -112,20 +115,21 @@ func _physics_process(delta):
 	# 3. wind force (which depends on airship direction to wind using formula sidewind_modifier * sin(wind-airship) + 1, which translates to minimum of 1 for airship parallel to the wind and sidewind_modifier + 1 for airship perpendicular to the wind) 
 	velocity = (engine_direction * engine_speed
 	+ Vector3.UP * climb_speed
-	+ global.wind_direction * (sidewind_modifier * sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)) 
+	+ 5 * global.wind_direction * (sidewind_modifier * sin(global.wind_direction.angle_to(global_transform.basis.z)) + 1)) 
 	
 	#Rotation on x axis (pitch)
 	var pitch_angle_diffrence = Xpivot.global_rotation.x - self.global_rotation.x
 	pitch_angle_diffrence = wrapf(pitch_angle_diffrence, -PI, PI)
 	var pitch = pitch_angle_diffrence * pitch_speed * delta
 	
-	#Rotates camera and player at the same rate in the opposite directions
-	#Player rotation has airship specific limits: min_pitch_in_pitch & max_pitch_in_pitch
-	#Local rotation is used for the camera (instead of global rotation) to prevent camera tilting
-	self.global_rotation.x = clampf(self.global_rotation.x + pitch, min_pitch_in_pitch, max_pitch_in_pitch)
-	self.global_rotation.x = wrapf(self.global_rotation.x, -PI, PI)
-	Xpivot.rotation.x -= pitch
-	Xpivot.rotation.x = wrapf(Xpivot.rotation.x, -PI, PI)
+	if not Input.is_action_pressed("aiming"):
+		#Rotates camera and player at the same rate in the opposite directions
+		#Player rotation has airship specific limits: min_pitch_in_pitch & max_pitch_in_pitch
+		#Local rotation is used for the camera (instead of global rotation) to prevent camera tilting
+		self.global_rotation.x = clampf(self.global_rotation.x + pitch, min_pitch_in_pitch, max_pitch_in_pitch)
+		self.global_rotation.x = wrapf(self.global_rotation.x, -PI, PI)
+		Xpivot.rotation.x -= pitch
+		Xpivot.rotation.x = wrapf(Xpivot.rotation.x, -PI, PI)
 	
 	#Rotation on y axis (yaw)
 	var yaw_angle_difference = Ypivot.global_rotation.y - self.global_rotation.y
@@ -133,15 +137,15 @@ func _physics_process(delta):
 	var yaw = yaw_angle_difference * yaw_speed * delta
 	
 	#Rotates camera and player at the same rate in the opposite directions
-	#Local rotation is used for the camera (instead of global rotation) to prevent camera tilting
-	self.global_rotation.y += yaw
-	self.global_rotation.y = wrapf(self.global_rotation.y, -PI, PI)
-	
-	Ypivot.rotation.y -= yaw
-	Ypivot.rotation.y = wrapf(Ypivot.rotation.y, -PI, PI)
-	
-	#During yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw
-	visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw) * max_roll_in_yaw, roll_level_speed * delta)
+	if not Input.is_action_pressed("aiming"):
+		self.global_rotation.y += yaw
+		self.rotation.y = wrapf(self.rotation.y, -PI, PI)
+		
+		Ypivot.rotation.y -= yaw
+		Ypivot.rotation.y = wrapf(Ypivot.rotation.y, -PI, PI)
+		
+		#During yaw there is a small and only visual rotation on z axis (roll) to simulate aerodynamics of yaw
+		visuals.rotation.z = lerp(visuals.rotation.z, -float(yaw) * max_roll_in_yaw, roll_level_speed * delta)
 	
 	move_and_slide()
 
@@ -165,7 +169,7 @@ func update_airship_specific_modifiers():
 			engine_direction_z = 1
 			engine_direction_y = 0
 	
-		'medium': #Hasn't been testes after changing flight system, needs to be tested and possibly adjusted
+		'medium': #Hasn't been tested after changing flight system, needs to be tested and possibly adjusted
 			engine_efficiency = 0.75
 			base_mass = 20000
 			lift_modifier = 0.02
@@ -182,16 +186,16 @@ func update_airship_specific_modifiers():
 			engine_direction_z = 1
 			engine_direction_y = 0
 		
-		'big': #Hasn't been testes after changing flight system, needs to be tested and possibly adjusted
-			engine_efficiency = 1.25
+		'big': #Hasn't been tested after changing flight system, needs to be tested and possibly adjusted
+			engine_efficiency = 0.75
 			base_mass = 45000
 			lift_modifier = 0.01
-			yaw_speed = 0.005
-			max_roll_in_yaw = 45
-			roll_level_speed = 1
-			max_pitch_in_pitch = 0.45
-			min_pitch_in_pitch = -0.45
-			pitch_speed = 1
+			yaw_speed = 0.5
+			max_roll_in_yaw = 25
+			roll_level_speed = 1.5
+			max_pitch_in_pitch = 0.05
+			min_pitch_in_pitch = -0.05
+			pitch_speed = 0.25
 			sidewind_modifier = 3
 			max_altitude = 2500
 			max_climb_speed = 8

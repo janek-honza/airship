@@ -1,33 +1,24 @@
 extends Node3D
 @onready var player = $".."
 
-var current_airship_type = 'small'
+var small = load("res://scenes/small.tscn")
+var medium = load("res://scenes/medium.tscn")
+var big = load("res://scenes/big.tscn")
 
-func _process(_delta):
-	if player:
-		# Check if the airship type has changed
-		if current_airship_type != player.airship_type:
-			current_airship_type = player.airship_type
-			update_visuals()
-	else:
-		push_error("Player node or 'airship_type' variable not found!")
-
-func update_visuals():
+func _on_player_airship_type_switched() -> void:
+	
+	for child in get_children():
+		child.queue_free()
+		
 	match player.airship_type:
 		'small':
-			$small.visible = true
-			$medium.visible = false
-			$big.visible = false
+			add_child(small.instantiate())
 		
 		'medium':
-			$small.visible = false
-			$medium.visible = true
-			$big.visible = false
+			add_child(medium.instantiate())
 		
 		'big':
-			$small.visible = false
-			$medium.visible = false
-			$big.visible = true
+			add_child(big.instantiate())
 		
 		_:
-			print("\nERROR: Airship type ", player.airship_type, "not implemented in player_visuals.gd")
+			printerr("\nERROR: Airship type ", player.airship_type, "not implemented in player_visuals.gd")
